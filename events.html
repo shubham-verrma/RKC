@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Upcoming Events &amp; Webinars — Rajiv K Chawla</title>
+  <meta name="description" content="Live masterclasses, workshops and Q&amp;As for MSME founders and business owners across India. New sessions every week." />
+  <meta name="author" content="Rajiv K Chawla" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="SITE_URL/events.html" /> <!-- TODO: replace SITE_URL at deploy -->
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Rajiv K Chawla" />
+  <meta property="og:title" content="Upcoming Events &amp; Webinars — Rajiv K Chawla" />
+  <meta property="og:description" content="Live masterclasses, workshops and Q&amp;As for MSME founders and business owners across India. New sessions every week." />
+  <meta property="og:url" content="SITE_URL/events.html" /> <!-- TODO: replace SITE_URL at deploy -->
+  <meta property="og:image" content="SITE_URL/media/og-home.jpg" /> <!-- TODO: replace SITE_URL at deploy; add the image file -->
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <!-- Fonts: Fraunces (headings) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Fraunces variable: roman + italic, weights 300–700, SOFT optical axis (used by heading accents) -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+
+  <!-- ======================= HEADER / NAV (shared) =======================
+       Duplicated on all pages — keep index.html, gaps.html and events.html
+       in sync when editing. -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="index.html" class="wordmark">Rajiv K Chawla</a>
+
+      <!-- Desktop nav -->
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="site-nav__links">
+          <li><a href="index.html" class="site-nav__link">Home</a></li>
+          <li><a href="gaps.html" class="site-nav__link">GAPS Program</a></li>
+          <li><a href="events.html" class="site-nav__link" aria-current="page">Upcoming Events</a></li>
+          <li><a href="team.html" class="site-nav__link">Team</a></li>
+        </ul>
+      </nav>
+
+      <!-- Mobile hamburger -->
+      <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
+    </div>
+
+  </header>
+
+  <!-- Full-screen mobile overlay menu — MUST be a sibling of the header,
+       never a child: the frosted header's backdrop-filter makes it the
+       containing block for fixed descendants, which would shrink this
+       overlay to the header bar instead of the viewport. -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html" class="mobile-menu__link">Home</a>
+    <a href="gaps.html" class="mobile-menu__link">GAPS Program</a>
+    <a href="events.html" class="mobile-menu__link" aria-current="page">Upcoming Events</a>
+    <a href="team.html" class="mobile-menu__link">Team</a>
+  </div>
+
+  <main>
+
+    <!-- ======================= PAGE HERO ======================= -->
+    <section class="page-hero">
+      <div class="container">
+        <p class="label reveal">Live Sessions</p>
+        <h1 class="reveal">Upcoming events <em class="accent">and webinars</em></h1>
+        <p class="page-hero__subline reveal">
+          New live sessions every week — masterclasses, workshops and Q&amp;As
+          for founders and business owners.
+        </p>
+      </div>
+    </section>
+
+    <!-- ======================= 01 · UPCOMING =======================
+         Rendered by main.js (initEventsPage) from the EVENTS array in
+         assets/js/events.js — edit that one file to update this page.
+         If nothing is upcoming, a "New sessions announced weekly" state
+         renders instead. -->
+    <section class="section section--rule" data-num="01">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="label">Upcoming</p>
+          <h2>Reserve your <em class="accent">seat</em></h2>
+        </header>
+
+        <div class="events-grid" data-events-list="upcoming">
+          <!-- Populated by main.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= 02 · PAST =======================
+         Also rendered by main.js. Hidden entirely if there are no past
+         events yet. -->
+    <section class="section section--alt section--rule" data-num="02">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="label">Past Events</p>
+          <h2>Previous <em class="accent">sessions</em></h2>
+        </header>
+
+        <!-- Past events carousel — rendered by main.js from PAST_EVENTS
+             in assets/js/events.js (newest first, 6 per slide on
+             desktop, swipe-per-card on mobile). Add events to that
+             array, never here. -->
+        <div class="pe-carousel" data-past-events>
+          <!-- Populated by main.js -->
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--rule" data-num="03">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="label">A Glimpse</p>
+          <h2>A glimpse of <em class="accent">the rooms</em></h2>
+          <p class="section-head__line">
+            Moments from workshops, summits and masterclasses across India.
+          </p>
+        </header>
+
+        <!-- Three-row infinite photo marquee — ALL 60 photos from
+             media/event-section/ (20/20/20 per row, hero-basic leads
+             row 1). Rows alternate direction; each row duplicates its
+             tile set so the -50% translate loops seamlessly. Hovering
+             pauses all rows; reduced motion renders a static grid.
+             Images are eager-loaded on purpose: lazy-loading misfires
+             inside transform-animated tracks (tiles arrive unloaded). -->
+        <div class="ph-carousel reveal" aria-label="Event photo gallery">
+        <div class="ph-row">
+          <div class="ph-row__track">
+            <div class="ph-row__set">
+            <figure class="ph-tile ph-tile--xl"><img width="1024" height="571" src="media/event-section/hero-basic.jpeg" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF2141.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/IMG_2916.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="799" src="media/event-section/7.jpg" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="798" src="media/event-section/GRV_8970.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="447" height="298" src="media/event-section/eco22-1.jpg" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/DSCF9743.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9279.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF3959.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="960" height="480" src="media/event-section/1.jpg" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="676" src="media/event-section/DSCF5000.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF6905.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF0056.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/399598855_10161191827832372_3164.jpg" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9254.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/event9.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1024" height="768" src="media/event-section/event1.jpg" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF5565.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF9998.jpg" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF5608.JPG" alt="Conference session at an SME growth summit" /></figure>
+            </div>
+            <div class="ph-row__set" aria-hidden="true">
+            <figure class="ph-tile ph-tile--xl"><img width="1024" height="571" src="media/event-section/hero-basic.jpeg" alt="" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF2141.JPG" alt="" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/IMG_2916.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="799" src="media/event-section/7.jpg" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="798" src="media/event-section/GRV_8970.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="447" height="298" src="media/event-section/eco22-1.jpg" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/DSCF9743.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9279.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF3959.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="960" height="480" src="media/event-section/1.jpg" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="676" src="media/event-section/DSCF5000.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF6905.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF0056.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/399598855_10161191827832372_3164.jpg" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9254.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/event9.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1024" height="768" src="media/event-section/event1.jpg" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF5565.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF9998.jpg" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF5608.JPG" alt="Conference session at an SME growth summit" /></figure>
+            </div>
+          </div>
+        </div>
+        <div class="ph-row ph-row--reverse">
+          <div class="ph-row__track">
+            <div class="ph-row__set">
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9310.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF4917.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="900" src="media/event-section/IMG_9336.jpg" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/DSCF9990.jpg" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="798" src="media/event-section/event6.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="900" src="media/event-section/IMG_9301.jpg" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="798" src="media/event-section/event8.jpg" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/GRV_9021.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF3961.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF9307.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="798" src="media/event-section/event2.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="799" src="media/event-section/2.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="801" src="media/event-section/event7.jpg" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="600" height="603" src="media/event-section/e5b2e125-e87a-a35a-bc95-fcbb3319.jpg" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="676" src="media/event-section/DSCF2376.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/359A5570.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="960" height="536" src="media/event-section/a.jpg" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/IMG_2710.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/DSCF9835.jpg" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="900" src="media/event-section/IMG_2848.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            </div>
+            <div class="ph-row__set" aria-hidden="true">
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9310.JPG" alt="" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF4917.JPG" alt="" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="900" src="media/event-section/IMG_9336.jpg" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/DSCF9990.jpg" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="798" src="media/event-section/event6.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="900" src="media/event-section/IMG_9301.jpg" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="798" src="media/event-section/event8.jpg" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/GRV_9021.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF3961.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF9307.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="798" src="media/event-section/event2.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="799" src="media/event-section/2.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="801" src="media/event-section/event7.jpg" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="600" height="603" src="media/event-section/e5b2e125-e87a-a35a-bc95-fcbb3319.jpg" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="676" src="media/event-section/DSCF2376.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/359A5570.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="960" height="536" src="media/event-section/a.jpg" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/IMG_2710.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/DSCF9835.jpg" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="900" src="media/event-section/IMG_2848.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            </div>
+          </div>
+        </div>
+        <div class="ph-row">
+          <div class="ph-row__track">
+            <div class="ph-row__set">
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="676" src="media/event-section/DSCF3246.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/event4.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF6988.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF7018.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/359A5401.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/359A5282.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF2249.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9684.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/event5.jpg" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/DSCF9992.jpg" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF5668.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/359A5551.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9748.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/event3.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/359A5384.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/359A5323.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="798" src="media/event-section/GRV_9056.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF6964.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="799" src="media/event-section/6.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="676" src="media/event-section/DSCF5025.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            </div>
+            <div class="ph-row__set" aria-hidden="true">
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="676" src="media/event-section/DSCF3246.JPG" alt="" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/event4.JPG" alt="" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF6988.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF7018.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/359A5401.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/359A5282.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF2249.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9684.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/event5.jpg" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/DSCF9992.jpg" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF5668.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/359A5551.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9748.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/event3.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/359A5384.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/359A5323.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="798" src="media/event-section/GRV_9056.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF6964.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="799" src="media/event-section/6.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="676" src="media/event-section/DSCF5025.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================= FOOTER (shared) =======================
+       Duplicated on all pages — keep in sync when editing. -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__top">
+        <div>
+          <a href="index.html" class="wordmark">Rajiv K Chawla</a>
+          <p class="site-footer__tagline">Business coach for India's MSMEs and startups.</p>
+        </div>
+
+        <!-- Social links: socials open in new tabs; mailto stays same-tab -->
+        <ul class="site-footer__social">
+          <li>
+            <a href="https://www.linkedin.com/in/rajiv-k-chawla-44204321/" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/rajivchawlaindia/" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23a3.7 3.7 0 0 1-.9 1.38c-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.9 5.9 0 0 0-2.13 1.38A5.9 5.9 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.8.72 1.47 1.38 2.13a5.9 5.9 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38 5.9 5.9 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://x.com/rajivchawlaind" aria-label="Twitter / X">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/@rajivkchawla" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="mailto:info@iamsmeofindia.com" aria-label="Email">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 4H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1zm-1.4 2L12 12.53 3.4 6h17.2zM3 18V7.87l8.4 6.38a1 1 0 0 0 1.2 0L21 7.87V18H3z"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <p class="site-footer__bottom">
+        &copy; <span data-current-year>2026</span> Rajiv K Chawla. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ======================= SCRIPTS ======================= -->
+  <!-- GSAP + ScrollTrigger + Lenis via CDN (globals), then site module -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>

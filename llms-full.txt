@@ -1,0 +1,219 @@
+# Rajiv K Chawla — Complete Site Content
+
+> Full text content of all four pages, as clean markdown for AI agents. Internal links use the SITE_URL placeholder (replaced at deploy). All content below is drawn directly from the site's pages.
+
+---
+
+# Home (SITE_URL/)
+
+## Rajiv K Chawla — Business Coach · MSME & Startup Growth
+
+Helping India's businesses grow with clarity, systems, and discipline.
+
+42+ years guiding founders, MSMEs, and family businesses across India.
+
+Key figures:
+- 50,000+ entrepreneurs guided
+- ₹1,000 Cr+ value added
+- 42+ years of experience
+
+As seen in: News18, Fortune India, The Financial Express, NDTV, Zee News, Dainik Bhaskar.
+
+## GAPS: Growth Accelerator Program for SMEs (flagship program)
+
+A full year of structured support for India's MSME owners. Seven counsels, thirty touchpoints, and one relationship that covers every domain your business touches. Built and led by Rajiv K Chawla, by application only.
+
+Three pillars:
+1. Personalised Support — Seven counsels, one relationship, all year.
+2. Structured Training — Thirty touchpoints across the year.
+3. Astro-Numerology — A considered input, for you and family.
+
+Details: SITE_URL/gaps.html
+
+## On the ground
+
+Real rooms, real founders, real work. A photo gallery of recent workshops, summits and masterclasses across India.
+
+## Video testimonials — what founders say
+
+In their own words, owners and founders on what changed for their business:
+
+1. Adarsh Shankar — MD, Optimus Tech Solutions
+2. Amit Aggarwal — MD, Agromach Engineering Pvt Ltd
+3. Arun Rubero — Solar Contura, Tiruchirappalli
+4. Vishal & Gaurav Malhotra — MD, Presto
+5. Rahat A Bhatia — MD, Raga Engineers
+6. Rajat Bajaj — Manufacturing Business, Haryana
+7. Romy Bhatia — MD, Haryana Grindwell Industries
+8. Dr. Shankar Goenka — MD, Wow Factors Private Limited
+
+---
+
+# GAPS — Growth Accelerator Program for SMEs (SITE_URL/gaps.html)
+
+A full year of structured support for India's MSME owners, built and led by Rajiv K Chawla. Founder & Lead Mentor: Rajiv K Chawla. Enrolment by application only.
+
+## Why this exists
+
+You run the business well. The other half is where owners run blind. Six gaps trip up almost every MSME owner. From today, you do not close them alone.
+
+1. **Schemes** — Subsidies you may qualify for and never claimed. We help you discover and file them.
+2. **Structure** — A large company still run like a proprietorship. Holding entities and governance in place.
+3. **Succession** — The next generation, equity splits and written rules, set before you need them.
+4. **Capital** — Finance beyond the CC limit. Debt, equity and working capital as tools, not threats.
+5. **Legal** — Contracts, IP and disputes. The small clauses that decide the size of the cheque.
+6. **Peers** — Other owners at your scale, comparing notes no consultant on retainer can give.
+
+## What GAPS is
+
+Not a course. A full year, on three pillars. A team that has solved this before, now on your side.
+
+- **Pillar 01 — Personalised Support**: 7 counsels, 1 relationship
+- **Pillar 02 — Structured Training**: 30 touchpoints
+- **Pillar 03 — Astro-Numerology**: You + family
+
+## Pillar 01 — The Core
+
+One relationship. The whole panel behind it. Every domain your business touches, handled by people who have done it before: Legal & IP, Tax & GST, Subsidies, Funding, Operations, Succession.
+
+"When a decision comes up, you do not face it alone. You bring it to people who have solved it before."
+
+## Pillar 02 — The Rhythm of the Year
+
+A steady rhythm, all year long. Two online sessions every month, run by domain experts, plus six in-person events through the year (scheduled through the year, not fixed to set months).
+
+24 online + 6 offline = 30 touchpoints a year.
+
+Session topics include: GeM portal, ITR, GST, Labour laws, Hiring. In-person gatherings bring members together from across India.
+
+## A benefit beyond the year — Germany
+
+Nominations to a fully sponsored 21-day training in Germany. Selected members are put forward for an immersion in the home of world-class manufacturing. Travel and stay sponsored.
+
+- 21 days — Immersion on the ground in Germany
+- Fully sponsored — Travel and stay covered for those selected
+- Manufacturing — Factories, engineering and best practice
+- By nomination — Members put forward through the year
+
+"A door most owners never get to open, opened for you. You go as part of a group, never on your own."
+
+## Pillar 03 — Astro-Numerology (a considered input)
+
+A dimension most programmes ignore, offered here with intent. One more considered input alongside the numbers, never a replacement for them.
+
+- Personal consultation — One to one with Rajiv sir.
+- Detailed report — In writing, for you and family.
+
+Your decisions at the centre, with timing, names, launches and family each in considered orbit around them.
+
+## Your coach — Rajiv K Chawla
+
+Someone the Indian SME establishment already trusts.
+
+"I have run businesses, lost them, rebuilt them, and watched the same gaps trip up almost every owner I have met. GAPS is the programme I wish someone had built for me at thirty-five."
+
+- **Jairaj Group** — Founder & Chairman. Auto and engineering components manufacturing.
+- **I AM SME of India** — Founder & Chairman.
+- **Boards** — Board of NSIC (6 years). China Trust Commercial Bank (4 years). SIDBI subsidiary companies (4 years).
+- **Councils** — MSE Facilitation Council (12 years). Government committees, including SIPEC and RAMP.
+- **Legacy** — 800+ owners mentored, author and columnist.
+
+## The expert panel — nine experts, always with you
+
+Governance, tax, GST and wealth — the veterans who keep your foundations sound:
+
+1. **CS Dr. Ajay Garg** — Corporate Governance. Company Secretary and doctorate, 35+ years in governance, board structuring and compliance.
+2. **CA Sangeet K Gupta** — Direct Tax & Financial Health. Chartered Accountant, 30+ years in direct tax strategy and audit readiness for owner-run books.
+3. **CA Rajesh K Khandelwal** — GST & Indirect Tax. Fellow CA, CS, LLB and CPA (Ireland). GST faculty for NACIN, 500+ tax lectures.
+4. **Nirmal Bansal** — Wealth Management. UCLA-trained wealth counsel, helping owners grow personal wealth kept separate from the business.
+5. **Lekhraj Sharma** — Chief Nodal Officer. 30 years inside administrative systems. Coordinates meetings and looks after your overall member experience.
+
+Subsidy, growth and law — the hands-on operators:
+
+6. **Parminder Singh** — Chief Subsidy Officer. 30+ years in central and state schemes, supporting SMEs to claim grants and incentives.
+7. **Shubham Verma** — Growth, GTM & Digital. Serial founder and Shark Tank India finalist. Advises on AI adoption, digital and new-market entry.
+8. **Adv. Rahul Gautam** — Legal, Supreme Court. Supreme Court advocate, 10+ years in commercial law, contracts and dispute resolution.
+9. **Sudiep Kumar** — Placement & Recruitment. Built leadership teams for growing companies. Helps you hire the people who can actually run the business.
+
+The point: 9 experts. Every domain covered. 800+ owners guided. 1 relationship, all year.
+
+## The honest maths — what a year of GAPS is actually worth
+
+Priced separately, the access alone runs past twenty lakh:
+
+| Item | Value |
+| --- | --- |
+| Personalised access to the 7-counsel panel and Rajiv, all year | ₹5,00,000 |
+| 24 expert-led online sessions (GeM, ITR, GST, labour, hiring) | ₹1,20,000 |
+| 6 in-person events across the year | ₹1,20,000 |
+| Nomination for a fully sponsored 21-day Germany training | ₹10,00,000 |
+| Subsidy and scheme discovery plus filing support | ₹1,50,000 |
+| Company structuring, governance and succession | ₹1,50,000 |
+| Legal and tax resolution, plus astro report (you and family) | ₹1,00,000 |
+
+Priced separately, a year of this is worth, on average: **₹21,00,000+**. GAPS offers all of it for **₹2,40,000**.
+
+Subsidies you become eligible to claim through the year: **₹10L to ₹2Cr**, based on your sector, size and eligibility. This is the real argument.
+
+## Pricing — one programme, one year
+
+GAPS Premium is the full year. All three pillars, under one enrolment. No tiers, no add-ons.
+
+**GAPS Premium — ₹2.4L + GST** (worth ₹21,00,000+ in advisory access). A full year. All three pillars. Includes:
+
+1. Full 7-counsel panel as your extended team, all year
+2. Direct access to Rajiv sir
+3. 24 expert-led online sessions
+4. 6 in-person events across the year
+5. Nomination for the 21-day Germany training
+6. Subsidy discovery and filing support
+7. Legal, tax, structuring and succession
+8. Astro consultation and report for your family
+
+Price exclusive of GST. Seats are limited and confirmed after the fit call.
+
+## Video testimonials
+
+The same eight owner testimonials listed on the home page (Adarsh Shankar, Amit Aggarwal, Arun Rubero, Vishal & Gaurav Malhotra, Rahat A Bhatia, Rajat Bajaj, Romy Bhatia, Dr. Shankar Goenka). "Join them, and the 800+ owners Rajiv has mentored."
+
+## Documents
+
+- [GAPS 2026 Information Booklet (PDF)](SITE_URL/GAPS_Brochure.pdf)
+
+## Apply to the next cohort
+
+Bring the business. We will bring the team. Cohorts are small and by application only. There is no commitment to begin with.
+
+1. Tell us about your business in a 15-minute call.
+2. Mutual fit check on sector, stage and intent.
+3. Enrol and meet your team.
+
+Contact: **Lekhraj Sharma**, Chief Nodal Officer, GAPS
+- Call: +91 97111 23111
+- WhatsApp: https://wa.me/919711123111
+- Email: info@iamsmeofindia.com
+
+Enrolment: https://rajivkchawla.exlyapp.com/checkout/f3f404f7-c6c2-45f9-b772-f2dae868e6c1
+
+---
+
+# Upcoming Events (SITE_URL/events.html)
+
+Live sessions: upcoming events and webinars. New live sessions every week — masterclasses, workshops and Q&As for founders and business owners.
+
+The page lists upcoming events (open for registration) and past sessions. Some events are public; others are exclusive to GAPS members. Event listings change weekly; consult the page for current dates, times, modes (online/offline) and registration links.
+
+---
+
+# Expert Panel (SITE_URL/team.html)
+
+The people behind the work — the team that keeps programs, events and member support running. The same nine-person panel detailed under the GAPS programme above: CS Dr. Ajay Garg (Corporate Governance Counsel), CA Sangeet K Gupta (Direct Tax & Financial Health Counsel), Nirmal Bansal (Wealth Management Counsel), Parminder Singh (Chief Subsidy Officer), CA Rajesh K Khandelwal (GST & Indirect Tax Counsel), Shubham Verma (Digital Expansion & Growth Counsel), Adv. Rahul Gautam (Legal Counsel, Supreme Court of India), Lekhraj Sharma (Chief Nodal Officer), and Sudiep Kumar (Placement & Recruitment).
+
+---
+
+# Social profiles
+
+- LinkedIn: https://www.linkedin.com/in/rajiv-k-chawla-44204321/
+- Instagram: https://www.instagram.com/rajivchawlaindia/
+- X (Twitter): https://x.com/rajivchawlaind
+- YouTube: https://www.youtube.com/@rajivkchawla

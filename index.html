@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO -->
+  <title>Rajiv K Chawla — Business Coach for India's MSMEs &amp; Family Businesses</title>
+  <meta name="description" content="Rajiv K Chawla mentors India's MSME owners, manufacturers and family businesses. 40+ years as a founder, promoter and operator. Founder &amp; Chairman, Jairaj Group and I AM SME OF INDIA." />
+  <meta name="author" content="Rajiv K Chawla" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="SITE_URL/" /> <!-- TODO: replace SITE_URL at deploy -->
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Rajiv K Chawla" />
+  <meta property="og:title" content="Rajiv K Chawla — Business Coach for India's MSMEs &amp; Family Businesses" />
+  <meta property="og:description" content="Rajiv K Chawla mentors India's MSME owners, manufacturers and family businesses. 40+ years as a founder, promoter and operator. Founder &amp; Chairman, Jairaj Group and I AM SME OF INDIA." />
+  <meta property="og:url" content="SITE_URL/" /> <!-- TODO: replace SITE_URL at deploy -->
+  <meta property="og:image" content="SITE_URL/media/og-home.jpg" /> <!-- TODO: replace SITE_URL at deploy; add the image file -->
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <!-- Fonts: Fraunces (headings) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Fraunces variable: roman + italic, weights 300–700, SOFT optical axis (used by heading accents) -->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <!-- Structured data (SITE_URL placeholders — replace at deploy) -->
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "Person", "name": "Rajiv K Chawla", "jobTitle": "Business Coach & Mentor", "description": "Business coach and mentor for India's MSMEs, manufacturers and family businesses", "url": "SITE_URL/", "image": "SITE_URL/assets/headshot.png", "sameAs": ["https://www.linkedin.com/in/rajiv-k-chawla-44204321/", "https://www.instagram.com/rajivchawlaindia/", "https://x.com/rajivchawlaind", "https://www.youtube.com/@rajivkchawla"], "worksFor": [{"@type": "Organization", "name": "Jairaj Group of Industries"}, {"@type": "Organization", "name": "I AM SME OF INDIA"}], "knowsAbout": ["MSME growth", "Government subsidies and schemes", "Business succession planning", "Company structuring and governance", "SME finance and capital"], "address": {"@type": "PostalAddress", "addressCountry": "IN"}}
+  </script>
+</head>
+<body>
+
+  <!-- ======================= TOP STACK: BANNER + HEADER =======================
+       One sticky container holding the promo ribbon and the nav, so they
+       stack in document order and can never overlap — no JS offset
+       involved. Ribbon: seamless marquee, pauses on hover, links to
+       gaps.html, dismissable (in-memory only — returns on reload). -->
+  <div class="top-stack">
+
+  <div class="promo-banner">
+    <a href="gaps.html" class="promo-banner__link" aria-label="Nominate yourself for Rajiv Chawla's mentorship — explore the GAPS Program">
+      <div class="promo-banner__track" aria-hidden="true">
+        <span class="promo-banner__set">
+          <span class="promo-banner__item">Nominate yourself for Rajiv Chawla's mentorship</span><span class="promo-banner__dot">&bull;</span>
+          <span class="promo-banner__item">Nominate yourself for Rajiv Chawla's mentorship</span><span class="promo-banner__dot">&bull;</span>
+          <span class="promo-banner__item">Nominate yourself for Rajiv Chawla's mentorship</span><span class="promo-banner__dot">&bull;</span>
+          <span class="promo-banner__item">Nominate yourself for Rajiv Chawla's mentorship</span><span class="promo-banner__dot">&bull;</span>
+          <span class="promo-banner__item">Nominate yourself for Rajiv Chawla's mentorship</span><span class="promo-banner__dot">&bull;</span>
+        </span>
+        <span class="promo-banner__set">
+          <span class="promo-banner__item">Nominate yourself for Rajiv Chawla's mentorship</span><span class="promo-banner__dot">&bull;</span>
+          <span class="promo-banner__item">Nominate yourself for Rajiv Chawla's mentorship</span><span class="promo-banner__dot">&bull;</span>
+          <span class="promo-banner__item">Nominate yourself for Rajiv Chawla's mentorship</span><span class="promo-banner__dot">&bull;</span>
+          <span class="promo-banner__item">Nominate yourself for Rajiv Chawla's mentorship</span><span class="promo-banner__dot">&bull;</span>
+          <span class="promo-banner__item">Nominate yourself for Rajiv Chawla's mentorship</span><span class="promo-banner__dot">&bull;</span>
+        </span>
+      </div>
+    </a>
+    <button class="promo-banner__close" type="button" aria-label="Dismiss banner">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <!-- ======================= HEADER / NAV (shared) =======================
+       Duplicated on all pages — keep index.html, gaps.html and events.html
+       in sync when editing. -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="index.html" class="wordmark">Rajiv K Chawla</a>
+
+      <!-- Desktop nav -->
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="site-nav__links">
+          <li><a href="index.html" class="site-nav__link" aria-current="page">Home</a></li>
+          <li><a href="gaps.html" class="site-nav__link">GAPS Program</a></li>
+          <li><a href="events.html" class="site-nav__link">Upcoming Events</a></li>
+          <li><a href="team.html" class="site-nav__link">Team</a></li>
+        </ul>
+      </nav>
+
+      <!-- Mobile hamburger -->
+      <button class="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
+    </div>
+
+  </header>
+
+  </div><!-- /.top-stack -->
+
+  <!-- Full-screen mobile overlay menu — MUST be a sibling of the header,
+       never a child: the frosted header's backdrop-filter makes it the
+       containing block for fixed descendants, which would shrink this
+       overlay to the header bar instead of the viewport. -->
+  <div class="mobile-menu" id="mobile-menu">
+    <!-- Explicit close ×: pinned below the sticky stack (fixed, so it
+         stays put while the overlay scrolls). While open, main.js hides
+         the header's hamburger-X so there's a single close affordance. -->
+    <button class="mobile-menu__close" type="button" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <a href="index.html" class="mobile-menu__link" aria-current="page">Home</a>
+    <a href="gaps.html" class="mobile-menu__link">GAPS Program</a>
+    <a href="events.html" class="mobile-menu__link">Upcoming Events</a>
+    <a href="team.html" class="mobile-menu__link">Team</a>
+  </div>
+
+  <main>
+
+    <!-- ======================= HERO =======================
+         Asymmetric 55/45 spread: type left, framed portrait right (kept
+         inside the container, bordered + soft layered shadow). Entrance
+         choreography and parallax live in main.js (initHero); initial
+         hidden states are CSS-gated behind html.js-ready so the hero is
+         never blank without JS. -->
+    <section class="hero">
+      <div class="container hero__inner">
+
+        <!-- Left: text -->
+        <div class="hero__content">
+          <p class="hero__eyebrow" data-hero-fade>Business Coach &bull; MSME &amp; Startup Growth</p>
+
+          <!-- Headline lines are wrapped individually for the GSAP mask
+               reveal: each .hero-line clips its inner span, which slides
+               up on load. Rebalance words across lines if rewording. -->
+          <h1 class="hero__headline">
+            <span class="hero-line"><span class="hero-line__inner">Helping India's</span></span>
+            <span class="hero-line"><span class="hero-line__inner">businesses grow with</span></span>
+            <span class="hero-line"><span class="hero-line__inner"><em class="hero__accent">clarity, systems,</em></span></span>
+            <span class="hero-line"><span class="hero-line__inner"><em class="hero__accent">and discipline.</em></span></span>
+          </h1>
+
+          <p class="hero__subline" data-hero-fade>
+            42+ years guiding founders, MSMEs, and family businesses across India.
+          </p>
+
+          <div class="hero__ctas" data-hero-fade>
+            <a href="gaps.html" class="btn btn--primary">Explore the GAPS Program</a>
+            <a href="events.html" class="hero__link">
+              See upcoming webinars
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8h12.2M9.4 3.2 14.2 8l-4.8 4.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+
+          <!-- Trust strip -->
+          <ul class="hero__stats" role="list" data-hero-fade>
+            <li class="hero__stat">
+              <span class="hero__stat-number">50,000+</span>
+              <span class="hero__stat-label">Entrepreneurs Guided</span>
+            </li>
+            <li class="hero__stat">
+              <span class="hero__stat-number">1,000&nbsp;Cr+</span>
+              <span class="hero__stat-label">Value Added</span>
+            </li>
+            <li class="hero__stat">
+              <span class="hero__stat-number">42+</span>
+              <span class="hero__stat-label">Years of Experience</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right: framed portrait -->
+        <div class="hero__media">
+          <!-- Soft navy orb behind the portrait; drifts on scroll -->
+          <span class="hero__glow" aria-hidden="true"></span>
+
+          <!-- .hero__frame carries a soft radial backdrop that dissolves
+               into the page (no card edge) — it renders immediately and
+               stays put. .hero__portrait-mask is the clip-path reveal
+               target: only the transparent-cutout portrait wipes in and
+               settles from scale 1.06 → 1.0. The img is grayscaled +
+               bottom-faded via CSS (contain, never stretched); remove
+               the filter line in styles.css to revert to colour. -->
+          <div class="hero__frame">
+            <div class="hero__portrait-mask">
+              <img
+                src="assets/headshot.png"
+                alt="Rajiv K Chawla, business coach"
+                class="hero__portrait"
+                width="1500"
+                height="1500"
+                fetchpriority="high"
+              />
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================= PRESS / AS SEEN IN =======================
+         Infinite marquee of outlet logos — display-only, not links.
+         The logo set is duplicated so the translateX(-50%) loop is
+         seamless; the duplicate is aria-hidden. Logo files live in
+         media/ at the project root (fortune-india is a .jpeg). -->
+    <section class="press" aria-label="Media coverage">
+      <div class="container">
+        <p class="press__label">As Seen In</p>
+      </div>
+
+      <div class="press__viewport">
+        <div class="press__track">
+          <ul class="press__set" role="list">
+            <li><span class="press__slot"><img width="365" height="273" src="media/news18.png" alt="News18" loading="lazy" /></span></li>
+            <li><span class="press__slot"><img width="701" height="438" src="media/fortune-india.jpeg" alt="Fortune India" loading="lazy" /></span></li>
+            <li><span class="press__slot press__slot--xwide"><img width="926" height="107" src="media/financial-express.png" alt="The Financial Express" loading="lazy" /></span></li>
+            <li><span class="press__slot press__slot--wide"><img width="728" height="137" src="media/ndtv.png" alt="NDTV" loading="lazy" /></span></li>
+            <li><span class="press__slot press__slot--md"><img width="464" height="215" src="media/zee-news.png" alt="Zee News" loading="lazy" /></span></li>
+            <li><span class="press__slot press__slot--md"><img width="504" height="198" src="media/dainik-bhaskar.png" alt="Dainik Bhaskar" loading="lazy" /></span></li>
+          </ul>
+          <!-- Duplicate set for the seamless loop — hidden from AT -->
+          <ul class="press__set" role="list" aria-hidden="true">
+            <li><span class="press__slot"><img width="365" height="273" src="media/news18.png" alt="" loading="lazy" /></span></li>
+            <li><span class="press__slot"><img width="701" height="438" src="media/fortune-india.jpeg" alt="" loading="lazy" /></span></li>
+            <li><span class="press__slot press__slot--xwide"><img width="926" height="107" src="media/financial-express.png" alt="" loading="lazy" /></span></li>
+            <li><span class="press__slot press__slot--wide"><img width="728" height="137" src="media/ndtv.png" alt="" loading="lazy" /></span></li>
+            <li><span class="press__slot press__slot--md"><img width="464" height="215" src="media/zee-news.png" alt="" loading="lazy" /></span></li>
+            <li><span class="press__slot press__slot--md"><img width="504" height="198" src="media/dainik-bhaskar.png" alt="" loading="lazy" /></span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= 01 · CURRENT POSITIONS =======================
+         Asymmetric card grid: the first card spans two columns. Cards are
+         .reveal siblings, so main.js staggers them in on scroll.
+         Placeholders: search for [ROLE], [ORG], [CONTEXT] to replace. -->
+    <section class="section section--rule positions" data-num="01">
+      <div class="container">
+
+        <header class="section-head reveal">
+          <p class="label">Current Positions</p>
+          <h2>Where he <em class="accent">leads today</em></h2>
+          <p class="section-head__line">Leadership roles shaping the future of Indian business</p>
+        </header>
+
+        <div class="pos-grid">
+
+          <article class="card pos-card pos-card--wide reveal">
+            <div class="pos-card__logo">
+              <img width="1417" height="520" src="media/logos/jairaj.jpg" alt="Jairaj Group of Industries" loading="lazy" />
+            </div>
+            <h3 class="pos-card__role">Founder &amp; Chairman</h3>
+            <p class="pos-card__org">Jairaj Group of Industries</p>
+            <p class="pos-card__note">Leading India's biggest manufacturer and global exporter of plastic bellows, struts and automobile components.</p>
+          </article>
+
+          <article class="card pos-card reveal">
+            <div class="pos-card__logo">
+              <img width="1417" height="520" src="media/logos/iamsme.jpg" alt="I am SME of India" loading="lazy" />
+            </div>
+            <h3 class="pos-card__role">Founder &amp; Chairman</h3>
+            <p class="pos-card__org">I am SME of India</p>
+            <p class="pos-card__note">Guiding one of the largest SME networks globally, helping entrepreneurs scale rapidly and sustainably.</p>
+          </article>
+
+          <article class="card pos-card reveal">
+            <div class="pos-card__logo">
+              <img width="1417" height="520" src="media/logos/DSIT.jpg" alt="Department of Science and Technology, Govt of Haryana" loading="lazy" />
+            </div>
+            <h3 class="pos-card__role">Executive Committee Member</h3>
+            <p class="pos-card__org">Department of Science and Technology, Govt of Haryana</p>
+          </article>
+
+          <article class="card pos-card reveal">
+            <div class="pos-card__logo">
+              <img width="1417" height="520" src="media/logos/icsi.jpg" alt="The MSME and Start-up Board of The Institute of Company Secretaries of India (ICSI)" loading="lazy" />
+            </div>
+            <h3 class="pos-card__role">Board Member</h3>
+            <p class="pos-card__org">The MSME and Start-up Board of The Institute of Company Secretaries of India (ICSI)</p>
+          </article>
+
+          <article class="card pos-card reveal">
+            <div class="pos-card__logo">
+              <img width="1131" height="370" src="media/logos/hansraj.jpg" alt="Mahatma Hansraj Centre for Innovation, Incubation, and Entrepreneurship (MHCIIE)" loading="lazy" />
+            </div>
+            <h3 class="pos-card__role">Advisory Board Member</h3>
+            <p class="pos-card__org">Mahatma Hansraj Centre for Innovation, Incubation, and Entrepreneurship (MHCIIE)</p>
+          </article>
+
+          <article class="card pos-card pos-card--wide reveal">
+            <div class="pos-card__logo">
+              <img width="1417" height="520" src="media/logos/MSME.jpg" alt="Strategic Investment Plans Evaluation Committee, Ministry of MSME, Govt of India" loading="lazy" />
+            </div>
+            <h3 class="pos-card__role">Committee Member</h3>
+            <p class="pos-card__org">Strategic Investment Plans Evaluation Committee, Ministry of MSME, Govt of India</p>
+            <p class="pos-card__note">Evaluating proposals for funding under the ₹6,000 crore RAMP Program.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= 02 · PAST POSITIONS =======================
+         Quieter than Current: a hairline-ruled timeline list on the faint
+         grey ground. Placeholders: [YEARS], [ROLE], [ORG]. -->
+    <section class="section section--dark section--rule past-positions" data-num="02">
+      <div class="container">
+
+        <header class="section-head reveal">
+          <p class="label">Previous Leadership Roles</p>
+          <h2>A track record built over decades</h2>
+          <p class="section-head__line">A legacy of service and impact</p>
+        </header>
+
+        <ol class="timeline" role="list">
+          <li class="timeline__item reveal">
+            <span class="timeline__logo">
+              <img width="1417" height="520" src="media/logos/nsic.jpg" alt="The National Small Industries Corporation Ltd. (NSIC)" loading="lazy" />
+            </span>
+            <span class="timeline__years">2011&ndash;2017</span>
+            <div class="timeline__body">
+              <h3 class="timeline__role">Director on the Board</h3>
+              <p class="timeline__org">The National Small Industries Corporation Ltd. (NSIC)</p>
+            </div>
+          </li>
+          <li class="timeline__item reveal">
+            <span class="timeline__logo">
+              <img width="1417" height="520" src="media/logos/HMSEFC.jpg" alt="Haryana MSME Facilitation Council" loading="lazy" />
+            </span>
+            <span class="timeline__years">2010&ndash;2022</span>
+            <div class="timeline__body">
+              <h3 class="timeline__role">Member</h3>
+              <p class="timeline__org">Haryana MSME Facilitation Council</p>
+            </div>
+          </li>
+          <li class="timeline__item reveal">
+            <span class="timeline__logo">
+              <img width="1417" height="520" src="media/logos/sidbi.jpg" alt="SIDBI" loading="lazy" />
+            </span>
+            <span class="timeline__years">8 years</span>
+            <div class="timeline__body">
+              <h3 class="timeline__role">Director on the Board</h3>
+              <p class="timeline__org">SIDBI</p>
+            </div>
+          </li>
+          <li class="timeline__item reveal">
+            <span class="timeline__logo">
+              <img width="1417" height="520" src="media/logos/ctbc.jpg" alt="ChinaTrust Bank (CTBC Bank)" loading="lazy" />
+            </span>
+            <span class="timeline__years">8 years</span>
+            <div class="timeline__body">
+              <h3 class="timeline__role">Director on the Board</h3>
+              <p class="timeline__org">ChinaTrust Bank (CTBC Bank)</p>
+            </div>
+          </li>
+          <li class="timeline__item reveal">
+            <span class="timeline__logo">
+              <img width="1417" height="520" src="media/logos/ISTSL.jpg" alt="ISTSL" loading="lazy" />
+            </span>
+            <span class="timeline__years">4 years</span>
+            <div class="timeline__body">
+              <h3 class="timeline__role">Director on the Board</h3>
+              <p class="timeline__org">ISTSL</p>
+            </div>
+          </li>
+          <li class="timeline__item reveal">
+            <span class="timeline__logo">
+              <img width="1417" height="520" src="media/logos/qci.jpg" alt="Quality Council of India (QCI)" loading="lazy" />
+            </span>
+            <span class="timeline__years">4 years</span>
+            <div class="timeline__body">
+              <h3 class="timeline__role">Member of the Governing Body</h3>
+              <p class="timeline__org">Quality Council of India (QCI)</p>
+            </div>
+          </li>
+        </ol>
+
+      </div>
+    </section>
+
+    <!-- ======================= 03 · GAPS TEASER =======================
+         Flagship-program pitch opening into gaps.html. Faint grey ground
+         with one navy orb for depth. Left column elements stagger in as
+         a .reveal group; the three pillar highlights (mirroring the GAPS
+         page) stagger as another. -->
+    <section class="section section--alt section--rule gaps-teaser" data-num="03">
+      <!-- Single navy blur orb behind the content -->
+      <div class="orb orb--navy gaps-teaser__orb" aria-hidden="true"></div>
+
+      <div class="container gaps-teaser__inner">
+
+        <!-- Left: pitch -->
+        <div class="gaps-teaser__pitch">
+          <p class="label reveal">Flagship Program</p>
+          <h2 class="reveal">GAPS: Growth Accelerator Program <em class="accent">for SMEs</em></h2>
+          <p class="gaps-teaser__summary reveal">
+            A full year of structured support for India's MSME owners. Seven
+            counsels, thirty touchpoints, and one relationship that covers
+            every domain your business touches. Built and led by
+            Rajiv K Chawla, by application only.
+          </p>
+          <div class="reveal">
+            <a href="gaps.html" class="btn btn--primary">Explore the GAPS Program</a>
+          </div>
+        </div>
+
+        <!-- Right: what members get -->
+        <ul class="gaps-points" role="list">
+          <li class="gaps-point reveal">
+            <span class="gaps-point__icon" aria-hidden="true">
+              <!-- people / support -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19c.6-3 2.8-4.5 5.5-4.5s4.9 1.5 5.5 4.5"/><circle cx="16.5" cy="9.5" r="2.4"/><path d="M16.4 14.6c2.3.1 3.8 1.5 4.3 3.9"/></svg>
+            </span>
+            <div>
+              <h3 class="gaps-point__title">Personalised Support</h3>
+              <p class="gaps-point__line">Seven counsels, one relationship, all year.</p>
+            </div>
+          </li>
+          <li class="gaps-point reveal">
+            <span class="gaps-point__icon" aria-hidden="true">
+              <!-- calendar / training rhythm -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5.5" width="16" height="15" rx="2"/><path d="M4 10h16M8.5 3.5v3M15.5 3.5v3"/><circle cx="9" cy="14.5" r="1" fill="currentColor" stroke="none"/><circle cx="13" cy="14.5" r="1" fill="currentColor" stroke="none"/><circle cx="17" cy="14.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </span>
+            <div>
+              <h3 class="gaps-point__title">Structured Training</h3>
+              <p class="gaps-point__line">Thirty touchpoints across the year.</p>
+            </div>
+          </li>
+          <li class="gaps-point reveal">
+            <span class="gaps-point__icon" aria-hidden="true">
+              <!-- star / astro-numerology -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3.5 2.5 5.3 5.8.7-4.3 4 1.1 5.7-5.1-2.8-5.1 2.8 1.1-5.7-4.3-4 5.8-.7z"/></svg>
+            </span>
+            <div>
+              <h3 class="gaps-point__title">Astro-Numerology</h3>
+              <p class="gaps-point__line">A considered input, for you and family.</p>
+            </div>
+          </li>
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- ======================= 04 · ON THE GROUND =======================
+         Three-row horizontal photo marquee fed from media/event-section/.
+         The carousel fades up on scroll (.reveal); rows loop seamlessly
+         and pause on hover. See the carousel comment below for details. -->
+    <section class="section section--dark section--rule on-ground" data-num="04">
+      <div class="container">
+
+        <header class="section-head reveal">
+          <p class="label">On the Ground</p>
+          <h2>Real rooms, real founders, <em class="accent">real work</em></h2>
+          <p class="section-head__line">
+            A glimpse of recent workshops, summits and masterclasses across India.
+          </p>
+        </header>
+
+        <!-- Three-row infinite photo marquee — ALL 60 photos from
+             media/event-section/ (20/20/20 per row, hero-basic leads
+             row 1). Rows alternate direction; each row duplicates its
+             tile set so the -50% translate loops seamlessly. Hovering
+             pauses all rows; reduced motion renders a static grid.
+             Images are eager-loaded on purpose: lazy-loading misfires
+             inside transform-animated tracks (tiles arrive unloaded). -->
+        <div class="ph-carousel reveal" aria-label="Event photo gallery">
+        <div class="ph-row">
+          <div class="ph-row__track">
+            <div class="ph-row__set">
+            <figure class="ph-tile ph-tile--xl"><img width="1024" height="571" src="media/event-section/hero-basic.jpeg" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF2141.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/IMG_2916.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="799" src="media/event-section/7.jpg" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="798" src="media/event-section/GRV_8970.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="447" height="298" src="media/event-section/eco22-1.jpg" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/DSCF9743.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9279.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF3959.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="960" height="480" src="media/event-section/1.jpg" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="676" src="media/event-section/DSCF5000.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF6905.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF0056.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/399598855_10161191827832372_3164.jpg" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9254.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/event9.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1024" height="768" src="media/event-section/event1.jpg" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF5565.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF9998.jpg" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF5608.JPG" alt="Conference session at an SME growth summit" /></figure>
+            </div>
+            <div class="ph-row__set" aria-hidden="true">
+            <figure class="ph-tile ph-tile--xl"><img width="1024" height="571" src="media/event-section/hero-basic.jpeg" alt="" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF2141.JPG" alt="" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/IMG_2916.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="799" src="media/event-section/7.jpg" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="798" src="media/event-section/GRV_8970.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="447" height="298" src="media/event-section/eco22-1.jpg" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/DSCF9743.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9279.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF3959.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="960" height="480" src="media/event-section/1.jpg" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="676" src="media/event-section/DSCF5000.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF6905.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF0056.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/399598855_10161191827832372_3164.jpg" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9254.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/event9.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1024" height="768" src="media/event-section/event1.jpg" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF5565.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF9998.jpg" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF5608.JPG" alt="Conference session at an SME growth summit" /></figure>
+            </div>
+          </div>
+        </div>
+        <div class="ph-row ph-row--reverse">
+          <div class="ph-row__track">
+            <div class="ph-row__set">
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9310.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF4917.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="900" src="media/event-section/IMG_9336.jpg" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/DSCF9990.jpg" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="798" src="media/event-section/event6.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="900" src="media/event-section/IMG_9301.jpg" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="798" src="media/event-section/event8.jpg" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/GRV_9021.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF3961.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF9307.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="798" src="media/event-section/event2.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="799" src="media/event-section/2.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="801" src="media/event-section/event7.jpg" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="600" height="603" src="media/event-section/e5b2e125-e87a-a35a-bc95-fcbb3319.jpg" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="676" src="media/event-section/DSCF2376.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/359A5570.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="960" height="536" src="media/event-section/a.jpg" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/IMG_2710.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/DSCF9835.jpg" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="900" src="media/event-section/IMG_2848.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            </div>
+            <div class="ph-row__set" aria-hidden="true">
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9310.JPG" alt="" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF4917.JPG" alt="" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="900" src="media/event-section/IMG_9336.jpg" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/DSCF9990.jpg" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="798" src="media/event-section/event6.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="900" src="media/event-section/IMG_9301.jpg" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="798" src="media/event-section/event8.jpg" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/GRV_9021.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF3961.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF9307.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="798" src="media/event-section/event2.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="799" src="media/event-section/2.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="801" src="media/event-section/event7.jpg" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="600" height="603" src="media/event-section/e5b2e125-e87a-a35a-bc95-fcbb3319.jpg" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="676" src="media/event-section/DSCF2376.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/359A5570.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="960" height="536" src="media/event-section/a.jpg" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/IMG_2710.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/DSCF9835.jpg" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="900" src="media/event-section/IMG_2848.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            </div>
+          </div>
+        </div>
+        <div class="ph-row">
+          <div class="ph-row__track">
+            <div class="ph-row__set">
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="676" src="media/event-section/DSCF3246.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/event4.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF6988.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF7018.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/359A5401.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/359A5282.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF2249.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9684.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/event5.jpg" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/DSCF9992.jpg" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF5668.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/359A5551.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9748.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/event3.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/359A5384.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/359A5323.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="798" src="media/event-section/GRV_9056.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF6964.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="799" src="media/event-section/6.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="676" src="media/event-section/DSCF5025.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            </div>
+            <div class="ph-row__set" aria-hidden="true">
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="676" src="media/event-section/DSCF3246.JPG" alt="" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/event4.JPG" alt="" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/DSCF6988.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF7018.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/359A5401.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/359A5282.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="676" src="media/event-section/DSCF2249.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9684.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="799" src="media/event-section/event5.jpg" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--xs"><img width="1200" height="1800" src="media/event-section/DSCF9992.jpg" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF5668.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="800" src="media/event-section/359A5551.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/DSCF9748.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/event3.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="800" src="media/event-section/359A5384.JPG" alt="Business owners gathered at an MSME community event" /></figure>
+            <figure class="ph-tile ph-tile--md"><img width="1200" height="800" src="media/event-section/359A5323.JPG" alt="Conference session at an SME growth summit" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="798" src="media/event-section/GRV_9056.JPG" alt="Founders networking at an I Am SME of India gathering" /></figure>
+            <figure class="ph-tile ph-tile--sm"><img width="1200" height="800" src="media/event-section/DSCF6964.JPG" alt="Workshop for MSME owners and manufacturers" /></figure>
+            <figure class="ph-tile ph-tile--lg"><img width="1200" height="799" src="media/event-section/6.JPG" alt="Award presentation at a business community event" /></figure>
+            <figure class="ph-tile ph-tile--xl"><img width="1200" height="676" src="media/event-section/DSCF5025.JPG" alt="Audience at a masterclass for SME founders" /></figure>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= 05 · VIDEO TESTIMONIALS =======================
+         Real member testimonials — VERTICAL (9:16) videos from
+         media/videos/. Nothing loads or plays until a card is clicked:
+         main.js builds a native <video controls> in the lightbox on
+         open and destroys it on close. data-video-orientation="portrait"
+         switches the lightbox to height-constrained portrait sizing.
+         (vivek-ji.mp4 exists in the folder but is left out pending his
+         name and designation.) -->
+    <section class="section section--alt section--rule testimonials" data-num="05">
+      <div class="container">
+
+        <header class="section-head reveal">
+          <p class="label">Video Testimonials</p>
+          <h2>What founders <em class="accent">say</em></h2>
+          <p class="section-head__line">
+            In their own words — owners and founders on what changed for their business.
+          </p>
+        </header>
+
+        <div class="vt-grid">
+
+          <button class="vt-card reveal" type="button" data-video-type="mp4" data-video-src="media/videos/adarsh-ji.mp4" data-video-orientation="portrait">
+            <span class="vt-card__thumb">
+              <img width="1062" height="1890" src="media/videos/thmb-adarsh.jpg" alt="Video testimonial from Adarsh Shankar" loading="lazy" />
+              <span class="vt-card__play" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6.5v11l9-5.5z" fill="currentColor"/></svg>
+              </span>
+            </span>
+            <span class="vt-card__meta">
+              <span class="vt-card__name">Adarsh Shankar</span>
+              <span class="vt-card__title">MD, Optimus Tech Solutions</span>
+            </span>
+          </button>
+
+          <button class="vt-card reveal" type="button" data-video-type="mp4" data-video-src="media/videos/amit-ji.mp4" data-video-orientation="portrait">
+            <span class="vt-card__thumb">
+              <img width="1063" height="1890" src="media/videos/thmb-amit.jpg" alt="Video testimonial from Amit Aggarwal" loading="lazy" />
+              <span class="vt-card__play" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6.5v11l9-5.5z" fill="currentColor"/></svg>
+              </span>
+            </span>
+            <span class="vt-card__meta">
+              <span class="vt-card__name">Amit Aggarwal</span>
+              <span class="vt-card__title">MD, Agromach Engineering Pvt Ltd</span>
+            </span>
+          </button>
+
+          <button class="vt-card reveal" type="button" data-video-type="mp4" data-video-src="media/videos/arun.mp4" data-video-orientation="portrait">
+            <span class="vt-card__thumb">
+              <img width="1063" height="1890" src="media/videos/thmb-arun.jpg" alt="Video testimonial from Arun Rubero" loading="lazy" />
+              <span class="vt-card__play" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6.5v11l9-5.5z" fill="currentColor"/></svg>
+              </span>
+            </span>
+            <span class="vt-card__meta">
+              <span class="vt-card__name">Arun Rubero</span>
+              <span class="vt-card__title">Solar Contura, Tiruchirappalli</span>
+            </span>
+          </button>
+
+          <button class="vt-card reveal" type="button" data-video-type="mp4" data-video-src="media/videos/malhotra-brothers.mp4" data-video-orientation="portrait">
+            <span class="vt-card__thumb">
+              <img width="1067" height="1893" src="media/videos/thmb-malhotras.jpg" alt="Video testimonial from Vishal & Gaurav Malhotra" loading="lazy" />
+              <span class="vt-card__play" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6.5v11l9-5.5z" fill="currentColor"/></svg>
+              </span>
+            </span>
+            <span class="vt-card__meta">
+              <span class="vt-card__name">Vishal &amp; Gaurav Malhotra</span>
+              <span class="vt-card__title">MD, Presto</span>
+            </span>
+          </button>
+
+          <button class="vt-card reveal" type="button" data-video-type="mp4" data-video-src="media/videos/rahat-bhatia.mp4" data-video-orientation="portrait">
+            <span class="vt-card__thumb">
+              <img width="1062" height="1912" src="media/videos/thmb-rahat.jpg" alt="Video testimonial from Rahat A Bhatia" loading="lazy" />
+              <span class="vt-card__play" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6.5v11l9-5.5z" fill="currentColor"/></svg>
+              </span>
+            </span>
+            <span class="vt-card__meta">
+              <span class="vt-card__name">Rahat A Bhatia</span>
+              <span class="vt-card__title">MD, Raga Engineers</span>
+            </span>
+          </button>
+
+          <button class="vt-card reveal" type="button" data-video-type="mp4" data-video-src="media/videos/rajat.mp4" data-video-orientation="portrait">
+            <span class="vt-card__thumb">
+              <img width="1062" height="1896" src="media/videos/thmb-rajat.jpg" alt="Video testimonial from Rajat Bajaj" loading="lazy" />
+              <span class="vt-card__play" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6.5v11l9-5.5z" fill="currentColor"/></svg>
+              </span>
+            </span>
+            <span class="vt-card__meta">
+              <span class="vt-card__name">Rajat Bajaj</span>
+              <span class="vt-card__title">Manufacturing Business, Haryana</span>
+            </span>
+          </button>
+
+          <button class="vt-card reveal" type="button" data-video-type="mp4" data-video-src="media/videos/romy-ji.mp4" data-video-orientation="portrait">
+            <span class="vt-card__thumb">
+              <img width="1063" height="1890" src="media/videos/thmb-romy.jpg" alt="Video testimonial from Romy Bhatia" loading="lazy" />
+              <span class="vt-card__play" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6.5v11l9-5.5z" fill="currentColor"/></svg>
+              </span>
+            </span>
+            <span class="vt-card__meta">
+              <span class="vt-card__name">Romy Bhatia</span>
+              <span class="vt-card__title">MD, Haryana Grindwell Industries</span>
+            </span>
+          </button>
+
+          <button class="vt-card reveal" type="button" data-video-type="mp4" data-video-src="media/videos/shankar-ji.mp4" data-video-orientation="portrait">
+            <span class="vt-card__thumb">
+              <img width="1062" height="1890" src="media/videos/thmb-shankar.jpg" alt="Video testimonial from Dr. Shankar Goenka" loading="lazy" />
+              <span class="vt-card__play" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 6.5v11l9-5.5z" fill="currentColor"/></svg>
+              </span>
+            </span>
+            <span class="vt-card__meta">
+              <span class="vt-card__name">Dr. Shankar Goenka</span>
+              <span class="vt-card__title">MD, Wow Factors Private Limited</span>
+            </span>
+          </button>
+
+        </div>
+
+
+        <!-- Mobile-only GAPS pointer (hidden on desktop via .m-cta) -->
+        <div class="m-cta reveal">
+          <p class="m-cta__line">See what a year inside GAPS changes.</p>
+          <a href="gaps.html" class="btn btn--primary">Explore the GAPS Program</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================= FOOTER (shared) =======================
+       Duplicated on all pages — keep in sync when editing. -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__top">
+        <div>
+          <a href="index.html" class="wordmark">Rajiv K Chawla</a>
+          <p class="site-footer__tagline">Business coach for India's MSMEs and startups.</p>
+        </div>
+
+        <!-- Social links: socials open in new tabs; mailto stays same-tab -->
+        <ul class="site-footer__social">
+          <li>
+            <a href="https://www.linkedin.com/in/rajiv-k-chawla-44204321/" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/rajivchawlaindia/" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23a3.7 3.7 0 0 1-.9 1.38c-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.9 5.9 0 0 0-2.13 1.38A5.9 5.9 0 0 0 .63 4.14C.33 4.9.13 5.78.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.8.72 1.47 1.38 2.13a5.9 5.9 0 0 0 2.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38 5.9 5.9 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://x.com/rajivchawlaind" aria-label="Twitter / X">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.youtube.com/@rajivkchawla" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="mailto:info@iamsmeofindia.com" aria-label="Email">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 4H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h20a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1zm-1.4 2L12 12.53 3.4 6h17.2zM3 18V7.87l8.4 6.38a1 1 0 0 0 1.2 0L21 7.87V18H3z"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <p class="site-footer__bottom">
+        &copy; <span data-current-year>2026</span> Rajiv K Chawla. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ======================= SCRIPTS ======================= -->
+  <!-- GSAP + ScrollTrigger + Lenis via CDN (globals), then site module -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,5235 @@
+/* ==========================================================================
+   Rajiv K Chawla — Design System
+   Clean, premium, modern white. High-end consulting / premium SaaS:
+   calm, confident, expensive.
+
+   Premium on white comes from restraint, not colour:
+   - Pure white base, faint cool-grey alternating sections.
+   - Soft layered shadows and hairline borders carry the depth.
+   - A whisper-faint line grid + two or three blur orbs add texture.
+   - Accents (navy first; maroon/gold rarely) are punctuation only:
+     one accent word, buttons, active nav, footer. Never large fills.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Colour — base */
+  --color-bg: #FFFFFF;             /* pure white base */
+  --color-bg-alt: #F6F7F9;         /* faint cool grey for alternating sections */
+  --color-ink: #0E1116;            /* near-black — headings, strong text */
+
+  /* Colour — accents (punctuation only, ~8% of the page) */
+  --color-navy: #12294A;           /* primary accent: buttons, links, labels */
+  --color-navy-dark: #0D1F3A;
+  --color-maroon: #7B1E22;         /* rare punctuation */
+  --color-gold: #B8860B;           /* rare punctuation */
+
+  /* Colour — neutrals */
+  --color-border: #E7EAEE;         /* hairlines, card borders */
+  --color-muted: #5A6472;          /* body text — muted slate */
+
+  /* Type */
+  --font-heading: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  /* Type scale */
+  --text-hero: clamp(2.75rem, 6.5vw, 5.5rem);    /* hero H1 */
+  --text-section: clamp(2rem, 4vw, 3.25rem);     /* section headings */
+  --text-sub: clamp(1.375rem, 2.4vw, 1.75rem);   /* H3 / card headings */
+  --text-body: 1.0625rem;
+  --text-label: 0.75rem;                         /* small-caps eyebrows */
+
+  /* Spacing scale */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --space-5: 64px;
+  --space-6: 96px;
+  --space-7: 128px;
+
+  /* Section vertical rhythm — generous whitespace is the luxury */
+  --section-pad: clamp(96px, 12vw, 160px);
+
+  /* Radius */
+  --radius-card: 16px;
+  --radius-img: 14px;
+  --radius-pill: 999px;
+
+  /* Shadows — two stacked layers, both low opacity, never harsh */
+  --shadow-card:
+    0 1px 2px rgba(14, 17, 22, 0.04),
+    0 12px 32px rgba(14, 17, 22, 0.06);
+  --shadow-card-hover:
+    0 2px 4px rgba(14, 17, 22, 0.05),
+    0 20px 48px rgba(14, 17, 22, 0.09);
+  --shadow-header: 0 1px 2px rgba(14, 17, 22, 0.03), 0 8px 24px rgba(14, 17, 22, 0.05);
+
+  /* Layout */
+  --content-max: 1200px;
+  --side-pad: clamp(20px, 5vw, 48px);
+
+  /* Background grid layer */
+  --grid-cell: 48px;
+  --grid-line: rgba(14, 17, 22, 0.03);
+
+  /* Hover-pulse ring (video play button) — re-themed by .section--dark */
+  --pulse-ring: rgba(18, 41, 74, 0.25);
+
+  /* Header */
+  --header-height: 76px;
+
+  /* Promo banner (home page ribbon) */
+  --promo-h: 38px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* ~power2.out */
+  --ease-sweep: cubic-bezier(0.4, 0, 0.2, 1);       /* button fill sweep */
+  --duration-fast: 0.25s;
+  --duration-sweep: 0.4s;
+  --duration-base: 0.6s;
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & base
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Hard guarantee: the page never scrolls sideways, whatever any section
+   does. `clip` (not `hidden`) — hidden would create a scroll container
+   and break position:sticky on the header and promo banner. */
+html,
+body {
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.65;
+  color: var(--color-muted);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Lenis smooth-scroll recommended styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-navy);
+  outline-offset: 3px;
+}
+
+::selection {
+  background-color: var(--color-navy);
+  color: #FFFFFF;
+}
+
+/* --------------------------------------------------------------------------
+   3. Background design layers
+   -------------------------------------------------------------------------- */
+
+/* 3a. Faint line grid — a whisper of structure across the whole page.
+   Fixed full-viewport layer built from two repeating linear-gradients
+   (vertical + horizontal hairlines) at ~3% opacity, 48px cells.
+   z-index -1 keeps it behind all content; sections with their own
+   background (alt-grey, footer navy) intentionally cover it. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-cell) var(--grid-cell);
+}
+
+/* 3b. Blur orbs — large, soft radial accents placed behind the hero and
+   one or two section breaks. SPARSE: two or three across the whole page.
+   Drop an empty <div class="orb orb--navy" aria-hidden="true"> inside any
+   position:relative section (all .section elements qualify) and position
+   it with inline style or a page-specific rule. */
+.orb {
+  position: absolute;
+  width: clamp(400px, 45vw, 600px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.14;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb--navy {
+  background: radial-gradient(circle, var(--color-navy) 0%, transparent 70%);
+  opacity: 0.16;
+}
+
+.orb--maroon {
+  background: radial-gradient(circle, var(--color-maroon) 0%, transparent 70%);
+  opacity: 0.12;
+}
+
+.orb--gold {
+  background: radial-gradient(circle, var(--color-gold) 0%, transparent 70%);
+  opacity: 0.12;
+}
+
+/* Orbs shrink on small screens so they never overwhelm the viewport
+   (.hero__glow is the home-hero orb, styled in section 9) */
+@media (max-width: 640px) {
+  .orb,
+  .hero__glow {
+    width: 280px;
+    filter: blur(70px);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   4. Typography
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 500;
+  color: var(--color-ink);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-hero);
+  line-height: 1.0;
+}
+
+h2 { font-size: var(--text-section); }
+h3 { font-size: var(--text-sub); letter-spacing: -0.01em; }
+h4 { font-size: 1.25rem; letter-spacing: 0; }
+
+/* Body copy never runs wide */
+p {
+  max-width: 62ch;
+}
+
+strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+/* Accent phrase inside a heading: lighter weight, Fraunces italic (SOFT
+   optical axis), navy by default — maroon variant for rare use.
+   HARD RULE: one accent phrase per heading, maximum. */
+.accent,
+.hero__accent {
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: "SOFT" 100;
+  color: var(--color-navy);
+}
+
+.accent--maroon {
+  color: var(--color-maroon);
+}
+
+/* Editorial label — eyebrows, section labels */
+.label,
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+}
+
+/* --------------------------------------------------------------------------
+   5. Layout
+   -------------------------------------------------------------------------- */
+.container {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--side-pad);
+}
+
+/* Major section: generous rhythm; position:relative so orbs and gutter
+   numerals can anchor to it. */
+.section {
+  position: relative;
+  padding-block: var(--section-pad);
+}
+
+/* Alternating faint cool grey — rhythm, never a hard colour block.
+   (.section--deep kept as a legacy alias.) */
+.section--alt,
+.section--deep {
+  background-color: var(--color-bg-alt);
+}
+
+/* Full-bleed hairline separating major sections */
+.section--rule {
+  border-top: 1px solid var(--color-border);
+}
+
+/* Optional gutter index numeral: data-num="01", "02", ... Very faint. */
+.section[data-num]::before {
+  content: attr(data-num);
+  position: absolute;
+  top: clamp(var(--space-3), 4vw, var(--space-5));
+  left: var(--side-pad);
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-ink);
+  opacity: 0.06;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Asymmetric 12-column grid — workhorse for varied section layouts.
+   Use span/start utilities (or inline grid-column) for offsets; avoid
+   uniform equal-card grids. */
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-3);
+}
+
+.col-4 { grid-column: span 4; }
+.col-5 { grid-column: span 5; }
+.col-6 { grid-column: span 6; }
+.col-7 { grid-column: span 7; }
+.col-8 { grid-column: span 8; }
+.start-2 { grid-column-start: 2; }
+.start-3 { grid-column-start: 3; }
+.start-6 { grid-column-start: 6; }
+.start-7 { grid-column-start: 7; }
+
+/* Collapse the editorial grid to a single column on small screens */
+@media (max-width: 720px) {
+  .grid-12 > * {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Card surface — white on white works because of the layered shadow */
+.card {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  transition:
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* On dark sections, hovered cards gain a subtle gold edge */
+.section--dark .card:hover {
+  border-color: rgba(184, 134, 11, 0.35);
+}
+
+/* Visually hidden but accessible to screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   6. Buttons & links
+   -------------------------------------------------------------------------- */
+.btn {
+  position: relative;
+  isolation: isolate;         /* contain the pseudo-element fill layers */
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: 14px 30px;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border-radius: var(--radius-pill);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-sweep) var(--ease-sweep); /* text flips with the fill sweep */
+}
+
+/* Primary: solid navy; on hover a maroon fill sweeps in from the left.
+   Two stacked pseudo-elements behind the text (negative z-index inside
+   the isolated context): ::before navy base, ::after the maroon sweep. */
+.btn--primary {
+  color: #FFFFFF;
+  box-shadow: var(--shadow-card);
+}
+
+.btn--primary::before,
+.btn--primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.btn--primary::before {
+  z-index: -2;
+  background-color: var(--color-navy);
+}
+
+.btn--primary::after {
+  z-index: -1;
+  background-color: var(--color-maroon);
+  transform: translateX(-101%);
+  transition: transform var(--duration-sweep) var(--ease-sweep);
+}
+
+.btn--primary:hover::after {
+  transform: translateX(0);
+}
+
+.btn--primary:hover {
+  transform: translateY(-1px);      /* subtle lift */
+  box-shadow: var(--shadow-card-hover);
+}
+
+.btn--primary:active {
+  transform: translateY(0);
+}
+
+/* Ghost: hairline border, quiet */
+.btn--ghost {
+  border: 1px solid var(--color-border);
+  color: var(--color-ink);
+  background-color: var(--color-bg);
+}
+
+.btn--ghost:hover {
+  border-color: var(--color-ink);
+}
+
+/* Text link: navy, underline draws from the left (background-size trick),
+   arrow nudges right on hover. */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding-bottom: 3px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition:
+    background-size var(--duration-sweep) var(--ease-sweep),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.link-arrow:hover {
+  background-size: 100% 1px;
+}
+
+.link-arrow svg {
+  width: 15px;
+  height: 15px;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.link-arrow:hover svg {
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------------------------
+   7. Image treatment
+   Global anti-distortion contract: every framed image gets a fixed
+   aspect-ratio and object-fit:cover, so nothing ever stretches, and no
+   image exceeds its frame. Override the ratio per use:
+     <figure class="img-frame" style="--img-ratio: 16 / 9">…
+   -------------------------------------------------------------------------- */
+.img-frame {
+  position: relative;
+  aspect-ratio: var(--img-ratio, 4 / 3);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-img);
+  background-color: var(--color-bg-alt);  /* placeholder tone while loading */
+  box-shadow: var(--shadow-card);
+}
+
+.img-frame > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   7b. Top stack + promo banner
+   .top-stack is ONE sticky container wrapping ribbon + header, so they
+   stack in document order and can never overlap — no JS offset, no
+   z-index race. Dismissing the ribbon just leaves the header in the
+   stack. Pages without a ribbon keep a standalone sticky .site-header.
+
+   The ribbon: seamless marquee — two identical text sets, track
+   translates -50%; each set carries the inter-set gap as padding so the
+   loop point is invisible. Whole ribbon is one link; × dismisses it.
+   -------------------------------------------------------------------------- */
+.top-stack {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Inside the stack the header is a normal block — the stack does the
+   sticking. Standalone headers (no banner pages) stay sticky. */
+.top-stack .site-header {
+  position: static;
+}
+
+.promo-banner {
+  position: relative;
+  height: var(--promo-h);
+  background-color: var(--color-navy);
+  overflow: hidden;             /* clips the track — no page overflow */
+}
+
+/* GAPS-page variant: pitch black with gold hairlines and gold text —
+   reads as part of the dark theme, not a foreign navy strip */
+.promo-banner--dark {
+  background-color: #0A0A0B;
+  border-top: 1px solid rgba(184, 134, 11, 0.4);
+  border-bottom: 1px solid rgba(184, 134, 11, 0.4);
+}
+
+/* Bright, full-opacity gold — legible against the black strip */
+.promo-banner--dark .promo-banner__link {
+  color: #E8C76A;
+}
+
+.promo-banner--dark .promo-banner__dot {
+  color: #A2A6AD;               /* slate dots between gold phrases */
+}
+
+.promo-banner--dark .promo-banner__close {
+  background-color: #0A0A0B;
+  color: rgba(184, 134, 11, 0.7);
+}
+
+.promo-banner--dark .promo-banner__close:hover {
+  color: var(--color-gold);
+}
+
+.promo-banner__link {
+  display: block;
+  height: 100%;
+  color: #FFFFFF;
+}
+
+.promo-banner__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  height: 100%;
+  animation: promo-marquee 35s linear infinite;
+}
+
+/* Pause so the ribbon can be read/clicked — pointer devices */
+@media (hover: hover) and (pointer: fine) {
+  .promo-banner:hover .promo-banner__track {
+    animation-play-state: paused;
+  }
+}
+
+.promo-banner__set {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-right: var(--space-3);   /* = item gap → seamless -50% loop */
+  flex-shrink: 0;
+}
+
+.promo-banner__item {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.promo-banner__dot {
+  color: var(--color-gold);
+}
+
+/* Close: solid navy ground so the scrolling text never runs beneath it */
+.promo-banner__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 44px;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-navy);
+  color: rgba(255, 255, 255, 0.75);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.promo-banner__close:hover {
+  color: #FFFFFF;
+}
+
+.promo-banner__close svg {
+  width: 14px;
+  height: 14px;
+}
+
+@keyframes promo-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* While the banner is present the hero shrinks so banner + header +
+   hero still fill one viewport (stacking itself is pure flow inside
+   .top-stack — no offset rule needed). */
+body.has-promo .hero {
+  min-height: calc(100svh - var(--header-height) - var(--promo-h));
+}
+
+/* Reduced motion: no marquee — a single static, centred line */
+@media (prefers-reduced-motion: reduce) {
+  .promo-banner__track {
+    animation: none;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .promo-banner__set {
+    padding-right: 0;
+  }
+
+  .promo-banner__set:last-child,
+  .promo-banner__set .promo-banner__item:not(:first-child),
+  .promo-banner__set .promo-banner__dot {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. Header / navigation
+   -------------------------------------------------------------------------- */
+/* Frosted glass bar — always frosted, sticky (in flow, never fixed). */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-height);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid rgba(14, 17, 22, 0.06);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Applied by JS after scrolling 80px — deepen slightly */
+.site-header.is-scrolled {
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 24px rgba(14, 17, 22, 0.06);
+}
+
+/* Fallback: without backdrop-filter the low-alpha glass would let content
+   bleed through illegibly, so raise the rgba toward solid. Text contrast
+   holds in both themes either way. */
+@supports not ((backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px))) {
+  .site-header {
+    background: rgba(255, 255, 255, 0.94);
+  }
+  .site-header.is-over-dark {
+    background: rgba(10, 10, 11, 0.94);
+  }
+}
+
+/* --- Dynamic contrast: .is-over-dark (toggled by initHeader in main.js
+   whenever a .section--dark section sits behind the header's midpoint).
+   Base colours declared here with transitions so the swap is smooth in
+   both directions as the header crosses a white/dark section boundary. */
+.site-header .wordmark,
+.site-header .site-nav__link {
+  color: #0E1116;
+  transition: color 0.25s ease;
+}
+
+.site-header .nav-toggle__bar {
+  background-color: #0E1116;
+  transition:
+    background-color 0.25s ease,
+    transform 0.3s var(--ease-out),
+    opacity 0.3s var(--ease-out);
+}
+
+/* Over a dark section: the frosted bar itself goes dark… */
+.site-header.is-over-dark {
+  background: rgba(10, 10, 11, 0.55);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+/* …and the text flips light */
+.site-header.is-over-dark .wordmark,
+.site-header.is-over-dark .site-nav__link {
+  color: #F7F4EE;
+}
+
+.site-header.is-over-dark .site-nav__link[aria-current="page"] {
+  color: #B8860B;   /* gold active on dark */
+}
+
+/* Hover/active underline draws in gold on dark — navy vanishes on black */
+.site-header.is-over-dark .site-nav__link {
+  background-image: linear-gradient(var(--color-gold), var(--color-gold));
+}
+
+.site-header.is-over-dark .nav-toggle__bar {
+  background-color: #F7F4EE;
+}
+
+/* Scrolled + over dark: deepen the dark glass (mirrors the light bar's
+   scroll deepening) so the light text stays readable at every position. */
+.site-header.is-scrolled.is-over-dark {
+  background: rgba(10, 10, 11, 0.72);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Never light hamburger bars over the white mobile overlay when open */
+.site-header.is-over-dark .nav-toggle[aria-expanded="true"] .nav-toggle__bar {
+  background-color: #0E1116;
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.wordmark {
+  font-family: var(--font-heading);
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+/* GAPS lockup (gaps.html header only): big Fraunces "GAPS" over a
+   small gold letter-spaced sub-line, matching the brochure cover.
+   The main line inherits the header's ink↔light contrast flip; the
+   gold sub-line reads on both grounds. */
+.wordmark--gaps {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 3px;
+  line-height: 1;
+}
+
+.wordmark__gaps {
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+}
+
+.wordmark__sub {
+  font-family: var(--font-body);
+  font-size: 0.5625rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(184, 134, 11, 0.8);
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.site-nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  list-style: none;
+}
+
+/* Nav links share the draw-from-left underline; active page is navy */
+.site-nav__link {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-ink);
+  padding-bottom: 3px;
+  background-image: linear-gradient(var(--color-navy), var(--color-navy));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition:
+    background-size var(--duration-sweep) var(--ease-sweep),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.site-nav__link:hover,
+.site-nav__link[aria-current="page"] {
+  background-size: 100% 1px;
+}
+
+.site-nav__link[aria-current="page"] {
+  color: var(--color-navy);
+}
+
+/* Hamburger — hidden on desktop */
+/* Hamburger. position:relative makes the z-index REAL (z-index on a
+   static element is ignored) — the button is the topmost hit-target at
+   its own coordinates inside the header's stacking context, above the
+   frosted background and any sibling. pointer-events + touch-action
+   declared explicitly so no inherited rule or double-tap-zoom heuristic
+   can eat the tap. 44×44 = full mobile tap target. */
+.nav-toggle {
+  display: none;
+  position: relative;
+  z-index: 102;
+  pointer-events: auto;
+  touch-action: manipulation;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nav-toggle__bar {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--color-ink);
+  transition:
+    transform 0.3s var(--ease-out),
+    opacity 0.3s var(--ease-out);
+}
+
+/* Hamburger → X when open */
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Full-screen mobile overlay menu.
+   MUST live as a SIBLING of .site-header in the markup — the frosted
+   header's backdrop-filter makes it the containing block for fixed
+   descendants, which would shrink inset:0 to the header bar.
+   Open/close is pure CSS responding to .is-open (toggled by main.js),
+   so the menu works even if every animation CDN fails; GSAP only adds
+   the optional link stagger on top. z-index sits BELOW the header so
+   the hamburger (→ ×) stays clickable above the open overlay. */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-3);
+  padding-inline: var(--side-pad);
+  padding-top: var(--header-height);   /* keep links clear of the header */
+  background-color: var(--color-bg);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.3s var(--ease-out),
+    visibility 0.3s var(--ease-out);
+}
+
+.mobile-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.mobile-menu__link {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 9vw, 3.25rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+}
+
+.mobile-menu__link[aria-current="page"] {
+  color: var(--color-navy);
+}
+
+.mobile-menu .btn {
+  margin-top: var(--space-3);
+}
+
+/* --------------------------------------------------------------------------
+   9. Hero (index.html)
+   Asymmetric 55/45 spread: dominant type left, framed portrait right.
+   The portrait stays inside the container (no bleed) in a bordered,
+   soft-shadowed frame. Entrance choreography lives in main.js.
+   -------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  /* Header is sticky (in flow), so the hero fills the rest of the
+     viewport — no fixed-header padding compensation needed. */
+  min-height: calc(100svh - var(--header-height));
+  display: flex;
+  align-items: center;
+  padding-block: var(--space-4) var(--space-5);
+  overflow: hidden; /* contain parallax drift and the hero orb */
+}
+
+.hero__inner {
+  display: grid;
+  grid-template-columns: 55fr 45fr;   /* asymmetric, type-dominant */
+  /* Top-align both columns: the portrait's top edge lines up with the
+     eyebrow label, so text block and portrait start together. */
+  align-items: start;
+  gap: clamp(var(--space-4), 6vw, var(--space-6));
+}
+
+/* --- Left column: text --- */
+/* Lift above the decorative glow — the media column paints later in DOM
+   order, so without this the blurred orb could wash the headline edge. */
+.hero__content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__eyebrow {
+  display: inline-block;
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-bottom: var(--space-3);
+}
+
+.hero__headline {
+  margin-bottom: var(--space-3);
+}
+
+/* Mask-reveal plumbing: each line clips its inner span, which GSAP slides
+   up from below. Slight padding/negative margin keeps descenders (g, y)
+   from being clipped once the line has settled at line-height 1.0. */
+.hero-line {
+  display: block;
+  overflow: hidden;
+  padding-block-end: 0.14em;
+  margin-block-end: -0.14em;
+}
+
+.hero-line__inner {
+  display: block;
+  will-change: transform;
+}
+
+.hero__subline {
+  font-size: var(--text-body);
+  color: var(--color-muted);
+  max-width: 44ch;
+  margin-bottom: var(--space-4);
+}
+
+.hero__ctas {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+/* Secondary hero link — navy arrow link */
+.hero__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding-bottom: 3px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-navy);
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition:
+    background-size var(--duration-sweep) var(--ease-sweep),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.hero__link:hover {
+  background-size: 100% 1px;
+}
+
+.hero__link svg {
+  width: 15px;
+  height: 15px;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.hero__link:hover svg {
+  transform: translateX(4px);
+}
+
+/* --- Trust strip: hairline-ruled stat blocks ---
+   All three stats stay on ONE row on desktop: nowrap container, numbers
+   shrink via clamp() and the blocks themselves may compress (min-width:0)
+   before anything wraps. Below 600px wrapping is allowed again. */
+.hero__stats {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.hero__stat {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;                       /* let blocks compress, not wrap */
+  padding-inline: var(--space-2);
+}
+
+.hero__stat:first-child {
+  padding-inline-start: 0;
+}
+
+/* Thin vertical rules between the three blocks — never after the last
+   (the sibling combinator only draws left edges on items 2 and 3) */
+.hero__stat + .hero__stat {
+  border-left: 1px solid var(--color-border);
+}
+
+.hero__stat-number {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 2.2vw, 2rem);   /* shrink gracefully, no wrap */
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.hero__stat-label {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+@media (max-width: 600px) {
+  /* Narrow screens: wrapping allowed again (3-up or stacked) */
+  .hero__stats {
+    flex-wrap: wrap;
+    gap: var(--space-2) 0;
+  }
+}
+
+/* --- Right column: framed portrait --- */
+.hero__media {
+  position: relative;
+}
+
+/* Backdrop for the transparent-cutout portrait. Fixed 4/5 ratio, capped
+   at 620px tall (max-width derived from the cap so the ratio always
+   holds). Deliberately NOT a card: no fill, border, radius or shadow.
+   Instead, a soft navy radial centered on the torso/head dissolves to
+   fully transparent well before the container edge, so the cutout gets
+   depth with no visible seam against the white page. The backdrop is not
+   part of the clip-path reveal — it stays put while the portrait wipes. */
+.hero__frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-height: 620px;
+  max-width: calc(620px * 4 / 5);
+  margin-left: auto;   /* sit toward the outer edge of the column */
+  background: radial-gradient(
+    60% 55% at 50% 42%,
+    rgba(18, 41, 74, 0.10) 0%,
+    rgba(18, 41, 74, 0.04) 45%,
+    transparent 75%
+  );
+}
+
+/* Clip-path reveal target (animated by main.js). Deliberately unstyled —
+   the radial backdrop lives on .hero__frame above so the wipe only ever
+   reveals the portrait, never the backdrop behind it. */
+.hero__portrait-mask {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  overflow: hidden;   /* contains the img's scale settle (1.06 → 1.0) */
+}
+
+/* The cutout: object-fit CONTAIN (defined edges — never crop or stretch),
+   bottom-aligned. Grayscale is scoped to this img ONLY — the radial
+   backdrop, orb and page stay in colour; delete the filter line to
+   revert the photo to colour. The mask-image softens only the last
+   sliver of the cutout (bottom 8% of the box ≈ 50px at full size) so
+   the crop edge dissolves without an early fade — he stays solid
+   through the torso. headshot.png has zero transparent padding below
+   the visible pixels (verified), so the element bottom IS his bottom
+   edge and the percentage anchors correctly. */
+.hero__portrait {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: grayscale(1) contrast(1.03);
+  mask-image: linear-gradient(to bottom, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 92%, transparent 100%);
+  will-change: transform;
+}
+
+/* Hero orb: ONE gold radial peeking from behind the panel's bottom-left
+   corner — ties the grayscale portrait back to the site's gold accent.
+   Drifts on scroll. (Styled here, not with .orb, because main.js targets
+   .hero__glow.) The panel's opaque gradient hides all but the peek. */
+.hero__glow {
+  position: absolute;
+  bottom: -12%;
+  left: -16%;
+  width: clamp(400px, 45vw, 600px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--color-gold) 0%, transparent 70%);
+  opacity: 0.16;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   9a2. Press strip — "As Seen In" marquee (index.html, below the hero)
+   Seamless infinite loop: the track holds two identical logo sets and
+   translates -50% of its own width. Each set carries the inter-item gap
+   as padding-right, so the halfway point lands exactly on a set boundary
+   — no visible gap or jump. Hairline top/bottom borders band the strip.
+   -------------------------------------------------------------------------- */
+.press {
+  /* Slots carry internal whitespace now, so the inter-slot gap is
+     tighter than when bare logos set their own widths */
+  --press-gap: clamp(var(--space-3), 4vw, var(--space-5));
+  padding-block: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+}
+
+.press__label {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: var(--space-3);
+}
+
+/* Clips the moving track — the page itself can never scroll sideways */
+.press__viewport {
+  overflow: hidden;
+}
+
+.press__track {
+  display: flex;
+  width: max-content;
+  animation: press-marquee 28s linear infinite;
+}
+
+/* Pause so a logo can be read/clicked */
+.press__viewport:hover .press__track {
+  animation-play-state: paused;
+}
+
+.press__set {
+  display: flex;
+  align-items: center;
+  gap: var(--press-gap);
+  padding-right: var(--press-gap);   /* = item gap → seamless -50% loop */
+  flex-shrink: 0;
+}
+
+/* Fixed-size flex slot per logo: every logo lives in the same 150×40 box,
+   centred both ways — one shared baseline, equal rhythm, and nothing can
+   ever overflow its slot or the page. */
+.press__slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 150px;
+  max-width: 150px;
+  height: 40px;
+}
+
+/* contain + max-* means any native aspect ratio scales DOWN to fit.
+   Greyscale + reduced opacity at rest unifies mismatched logo styles. */
+.press__slot img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.6;
+  transition:
+    filter 0.3s ease,
+    opacity 0.3s ease;
+}
+
+/* Optical balance tiers (measured from the real files): at equal pixel
+   height a long wordmark reads far LARGER than a compact mark, so wider
+   logos get proportionally shorter caps. Percentages of the slot height,
+   so the tiers scale automatically when the slot shrinks on mobile.
+     default        — compact marks  (News18 1.3:1, Fortune 1.6:1) → 100%
+     --md   ~2–3:1  — Zee News, Dainik Bhaskar                    → 80%
+     --wide ~5:1    — NDTV                                        → 60%
+     --xwide ~8.7:1 — Financial Express                           → 40% */
+.press__slot--md img {
+  max-height: 80%;
+}
+
+.press__slot--wide img {
+  max-height: 60%;
+}
+
+.press__slot--xwide img {
+  max-height: 40%;
+}
+
+/* Colour resolves on hover — pointer devices only */
+@media (hover: hover) and (pointer: fine) {
+  .press__slot:hover img {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+}
+
+@keyframes press-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Reduced motion: no marquee — one static, centred, wrapping row.
+   The duplicate set is removed so logos don't appear twice. */
+@media (prefers-reduced-motion: reduce) {
+  .press__track {
+    animation: none;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .press__set {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-right: 0;
+    row-gap: var(--space-2);
+  }
+
+  .press__set[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Smaller slots on phones — the percentage tiers scale with them */
+  .press__slot {
+    width: 116px;
+    max-width: 116px;
+    height: 32px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9b. Section header pattern
+   Small-caps label above the section heading. Reused by every section.
+   -------------------------------------------------------------------------- */
+.section-head {
+  margin-bottom: clamp(var(--space-4), 6vw, var(--space-5));
+}
+
+.section-head .label {
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+/* --------------------------------------------------------------------------
+   9c. Current positions (index.html, section 01)
+   Asymmetric card grid: 3 columns with the lead card spanning two.
+   Cards ride on the shared .card surface; hover adds a subtle lift.
+   -------------------------------------------------------------------------- */
+.pos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.pos-card {
+  padding: var(--space-4) var(--space-3) var(--space-3);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.pos-card:hover {
+  transform: translateY(-4px);   /* subtle lift; .card deepens the shadow */
+}
+
+/* The lead card spans two columns for asymmetry */
+.pos-card--wide {
+  grid-column: span 2;
+}
+
+/* Logo slot — wide chip sized for landscape logo lockups (~2.7:1).
+   Explicit WHITE fill (not a theme token): the logo files are JPEGs with
+   white backgrounds, so the chip must stay white in dark sections too.
+   object-fit:contain preserves every logo's aspect ratio. */
+.pos-card__logo {
+  width: 110px;
+  height: 44px;
+  margin-bottom: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  overflow: hidden;
+}
+
+.pos-card__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 5px;
+}
+
+.pos-card__role {
+  font-size: 1.375rem;
+  margin-bottom: var(--space-1);
+}
+
+.pos-card__org {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-bottom: var(--space-2);
+}
+
+.pos-card__note {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+@media (max-width: 980px) {
+  .pos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  /* wide card = full row of the 2-col grid */
+}
+
+@media (max-width: 640px) {
+  .pos-grid {
+    grid-template-columns: 1fr;
+  }
+  .pos-card--wide {
+    grid-column: auto;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9d. Past positions (index.html, section 02)
+   Hairline-ruled timeline list — deliberately lower visual weight than
+   the current-positions cards: no surfaces, no shadows, just rules.
+   -------------------------------------------------------------------------- */
+.timeline {
+  border-top: 1px solid var(--color-border);
+  max-width: 820px;   /* tighter measure than the full container */
+}
+
+.timeline__item {
+  display: grid;
+  grid-template-columns: 110px 130px 1fr;   /* logo | years | role/org */
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Org logo chip — same dimensions and white-fill rule as .pos-card__logo
+   so logos read identically in both sections (incl. on the dark ground) */
+.timeline__logo {
+  display: block;
+  width: 110px;
+  height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  overflow: hidden;
+}
+
+.timeline__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 5px;
+}
+
+.timeline__years {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.timeline__role {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.timeline__org {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+@media (max-width: 560px) {
+  /* Stack: logo, then years, then role on small screens */
+  .timeline__item {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+
+  .timeline__logo {
+    margin-bottom: var(--space-1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9e. GAPS teaser (index.html, section 03)
+   Full-width feature block on the faint grey ground: pitch left,
+   three-point highlight list right, one navy orb behind for depth.
+   -------------------------------------------------------------------------- */
+.gaps-teaser {
+  overflow: clip;   /* contain the orb — no horizontal scroll */
+}
+
+.gaps-teaser__orb {
+  top: -15%;
+  right: -10%;
+}
+
+/* Keep content above the orb */
+.gaps-teaser__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: clamp(var(--space-4), 6vw, var(--space-6));
+}
+
+.gaps-teaser__pitch .label {
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.gaps-teaser__pitch h2 {
+  margin-bottom: var(--space-3);
+}
+
+.gaps-teaser__summary {
+  max-width: 52ch;
+  margin-bottom: var(--space-4);
+}
+
+/* --- Highlight points: icon chip + title + one line --- */
+.gaps-points {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.gaps-point {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+/* White icon chip pops gently off the grey ground */
+.gaps-point__icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-card);
+  color: var(--color-navy);
+}
+
+.gaps-point__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.gaps-point__title {
+  font-size: 1.125rem;
+  margin-bottom: 2px;
+}
+
+.gaps-point__line {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+@media (max-width: 900px) {
+  .gaps-teaser__inner {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9f. On the ground — three-row photo marquee (index.html, section 04)
+   Rows scroll continuously (left / right / left) at slightly different
+   slow speeds. Seamless loop: each row holds two identical tile sets and
+   the track translates -50%; the inter-tile gap is carried as set
+   padding so the loop point is invisible. Tiles share a fixed height per
+   row with varied widths (editorial rhythm), object-fit:cover — nothing
+   distorts. Hover anywhere pauses every row (pointer devices).
+   -------------------------------------------------------------------------- */
+
+/* Optional short line under a section heading */
+.section-head__line {
+  margin-top: var(--space-2);
+  font-size: var(--text-body);
+  color: var(--color-muted);
+}
+
+.ph-carousel {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.ph-row {
+  overflow: hidden;   /* clips the moving track — no page overflow */
+}
+
+.ph-row__track {
+  display: flex;
+  width: max-content;
+  animation: ph-scroll var(--ph-dur, 50s) linear infinite;
+}
+
+/* Alternating directions + slightly different speeds per row.
+   Durations scale with set length: 20 tiles/row ≈ 3× the original set,
+   so loops are ~3× longer to keep the same calm pixel speed. */
+.ph-row:nth-child(1) .ph-row__track { --ph-dur: 150s; }
+.ph-row:nth-child(2) .ph-row__track { --ph-dur: 168s; }
+.ph-row:nth-child(3) .ph-row__track { --ph-dur: 138s; }
+
+.ph-row--reverse .ph-row__track {
+  animation-direction: reverse;
+}
+
+@keyframes ph-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Hovering anywhere in the carousel pauses ALL rows — pointer devices */
+@media (hover: hover) and (pointer: fine) {
+  .ph-carousel:hover .ph-row__track {
+    animation-play-state: paused;
+  }
+}
+
+.ph-row__set {
+  display: flex;
+  gap: var(--space-2);
+  padding-right: var(--space-2);   /* = tile gap → seamless -50% loop */
+  flex-shrink: 0;
+}
+
+/* Tiles: fixed height per row, varied widths, cover-cropped.
+   Resting: hairline border + soft dark shadow lifting tiles off the
+   black ground. Gold appears ONLY on hover (pointer devices). */
+.ph-tile {
+  position: relative;
+  height: 200px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-img);
+  background-color: var(--color-bg-alt);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  transition:
+    transform 0.4s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.ph-tile--xl { width: 340px; }
+.ph-tile--lg { width: 290px; }
+.ph-tile--md { width: 240px; }
+.ph-tile--sm { width: 190px; }
+.ph-tile--xs { width: 160px; }
+
+.ph-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+/* Faint gold wash on tile hover */
+.ph-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-gold);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* Hover: gold hairline + soft gold glow layered over the dark lift */
+  .ph-tile:hover {
+    transform: translateY(-4px);
+    border-color: rgba(184, 134, 11, 0.6);
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.5),
+      0 0 26px rgba(184, 134, 11, 0.28);
+  }
+
+  .ph-tile:hover img {
+    transform: scale(1.06);
+  }
+
+  .ph-tile:hover::after {
+    opacity: 0.12;
+  }
+}
+
+/* Reduced motion: no marquee — a static, wrapped grid (duplicate sets
+   removed so photos don't appear twice) */
+@media (prefers-reduced-motion: reduce) {
+  .ph-row {
+    overflow: visible;
+  }
+
+  .ph-row__track {
+    animation: none;
+    width: auto;
+  }
+
+  .ph-row__set {
+    flex-wrap: wrap;
+    padding-right: 0;
+  }
+
+  .ph-row__set[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Two rows on mobile, smaller tiles, still scrolling */
+  .ph-row:nth-child(3) {
+    display: none;
+  }
+
+  .ph-tile { height: 140px; }
+  .ph-tile--xl { width: 235px; }
+  .ph-tile--lg { width: 200px; }
+  .ph-tile--md { width: 165px; }
+  .ph-tile--sm { width: 135px; }
+  .ph-tile--xs { width: 115px; }
+}
+
+/* --------------------------------------------------------------------------
+   9g. Video testimonials (index.html, section 05)
+   Cards are <button>s: 16/9 framed thumbnail with a play overlay, then
+   name + title. Clicking opens the lightbox (built by main.js).
+   -------------------------------------------------------------------------- */
+.vt-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+}
+
+.vt-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;              /* grid rows stretch → equal card heights */
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.35s ease;
+}
+
+/* PORTRAIT tile — the testimonial videos are vertical 9:16 */
+.vt-card__thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-img);
+  background-color: var(--color-bg);      /* on the grey ground, thumbs are white-framed */
+  box-shadow: var(--shadow-card);
+  margin-bottom: var(--space-2);
+  transition: box-shadow 0.35s ease;
+}
+
+.vt-card__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .vt-card:hover {
+    transform: translateY(-4px);          /* subtle lift */
+  }
+
+  .vt-card:hover .vt-card__thumb {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .vt-card:hover .vt-card__thumb img {
+    transform: scale(1.05);
+  }
+
+  /* Play button brightens on hover */
+  .vt-card:hover .vt-card__play {
+    background-color: #FFFFFF;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
+/* Play button overlay — soft pulse on hover only */
+.vt-card__play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.92);
+  color: var(--color-navy);
+  box-shadow: var(--shadow-card);
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.vt-card__play svg {
+  width: 22px;
+  height: 22px;
+  margin-left: 2px;   /* optically center the triangle */
+}
+
+@keyframes play-pulse {
+  0%   { box-shadow: 0 0 0 0 var(--pulse-ring); }
+  70%  { box-shadow: 0 0 0 14px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+.vt-card:hover .vt-card__play,
+.vt-card:focus-visible .vt-card__play {
+  animation: play-pulse 1.6s var(--ease-out) infinite;
+}
+
+/* Name strip: dark rounded block, centred — name over designation */
+.vt-card__meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 2px;
+  padding: 12px 14px;
+  background-color: #14161A;
+  border-radius: 12px;
+}
+
+.vt-card__name {
+  display: block;
+  font-weight: 600;
+  color: #FFFFFF;
+  font-size: 0.9375rem;
+  line-height: 1.3;
+}
+
+.vt-card__title {
+  display: block;
+  font-size: 0.8125rem;
+  color: #A2A6AD;
+  line-height: 1.35;
+}
+
+@media (max-width: 1080px) {
+  .vt-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  /* Two-up stays comfortable for portrait tiles at 375px */
+  .vt-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+  }
+
+  .vt-card__play {
+    width: 44px;
+    height: 44px;
+  }
+
+  .vt-card__meta {
+    padding: 10px 8px;
+  }
+
+  .vt-card__name {
+    font-size: 0.8125rem;
+  }
+
+  .vt-card__title {
+    font-size: 0.6875rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9h. Video lightbox (element built by main.js)
+   Dark backdrop, centered 16/9 player. Opens/closes via .is-open; the
+   player node is emptied on close, which stops playback.
+   -------------------------------------------------------------------------- */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;                 /* above header (100) and mobile menu (101) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+  background-color: rgba(14, 17, 22, 0.78);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s var(--ease-out),
+    visibility 0.3s var(--ease-out);
+}
+
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox__dialog {
+  position: relative;
+  width: min(960px, 100%);
+}
+
+.lightbox__player {
+  aspect-ratio: 16 / 9;
+  background-color: #000;
+  border-radius: var(--radius-img);
+  overflow: hidden;
+  box-shadow: var(--shadow-card-hover);
+}
+
+.lightbox__player iframe,
+.lightbox__player video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Portrait mode (vertical 9:16 videos): the player is constrained by
+   VIEWPORT HEIGHT, not width — a tall centred pillar, near-full-screen
+   on mobile. Toggled by main.js from data-video-orientation. */
+.lightbox--portrait .lightbox__dialog {
+  width: auto;
+}
+
+.lightbox--portrait .lightbox__player {
+  aspect-ratio: 9 / 16;
+  height: min(82vh, 820px);
+  width: auto;
+}
+
+@media (max-width: 640px) {
+  .lightbox--portrait .lightbox__player {
+    height: min(80vh, calc((100vw - 32px) * 16 / 9));
+  }
+}
+
+.lightbox__close {
+  position: absolute;
+  top: -48px;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.lightbox__close:hover {
+  background-color: #FFFFFF;
+  color: var(--color-ink);
+}
+
+.lightbox__close svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 640px) {
+  /* Full-width player on mobile */
+  .lightbox {
+    padding: var(--space-2);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9i. Team (index.html, section 06)
+   Seven cards in a centering flex-wrap layout: four per row on desktop,
+   so the leftover three centre themselves on the second row. Because
+   wrapping re-centres at every width, the odd count never strands an
+   orphan card at any breakpoint.
+   -------------------------------------------------------------------------- */
+.team-grid {
+  --team-gap: var(--space-3);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--team-gap);
+}
+
+.team-card {
+  /* 4 per row: basis = quarter of the row minus its share of the gaps */
+  flex: 0 1 calc((100% - 3 * var(--team-gap)) / 4);
+  position: relative;
+  overflow: hidden;   /* clips the hover hairline to the card radius */
+  padding: var(--space-2) var(--space-2) var(--space-3);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-6px);   /* lift; .card deepens the shadow */
+}
+
+/* Accent hairline along the top edge, drawn in on hover.
+   Painted with --color-navy so it renders navy on this white page and
+   gold automatically inside dark sections. */
+.team-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-navy);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.team-card:hover::before {
+  transform: scaleX(1);
+}
+
+/* Square framed photo. Default is FULL COLOUR — touch devices can't
+   hover, so they must never be stuck on greyscale. The greyscale-at-rest
+   → colour-on-hover effect is gated below on hover CAPABILITY (not
+   screen width), so it applies only where a real pointer exists. */
+.team-card__photo {
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: calc(var(--radius-img) - 4px);
+  background-color: var(--color-bg-alt);  /* placeholder tone while loading */
+  margin-bottom: var(--space-2);
+}
+
+.team-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0);   /* colour everywhere by default */
+  transition:
+    filter 0.4s ease,
+    transform 0.4s ease;
+}
+
+.team-card:hover .team-card__photo img {
+  transform: scale(1.04);
+}
+
+/* Pointer devices only: greyscale at rest, colour resolves on hover */
+@media (hover: hover) and (pointer: fine) {
+  .team-card__photo img {
+    filter: grayscale(1);
+  }
+
+  .team-card:hover .team-card__photo img {
+    filter: grayscale(0);
+  }
+}
+
+.team-card__name {
+  font-size: 1.1875rem;
+  margin-bottom: 2px;
+}
+
+.team-card__role {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-bottom: 2px;
+}
+
+/* Years badge — mirrors the GAPS panel-card years line. Muted here (the
+   role line above already carries this page's accent). */
+.team-card__years {
+  display: block;
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: var(--space-1);
+}
+
+.team-card__bio {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+@media (max-width: 1080px) {
+  .team-card {
+    /* 3 per row → rows of 3 / 3 / 1, last card centred */
+    flex-basis: calc((100% - 2 * var(--team-gap)) / 3);
+  }
+}
+
+@media (max-width: 760px) {
+  .team-card {
+    /* 2 per row → 2 / 2 / 2 / 1, last card centred */
+    flex-basis: calc((100% - var(--team-gap)) / 2);
+  }
+}
+
+@media (max-width: 600px) {
+  /* Single column below 600px, like every non-photo grid */
+  .team-card {
+    flex-basis: 100%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9j. GAPS page components (gaps.html)
+   -------------------------------------------------------------------------- */
+
+/* --- Page hero: quieter than the home hero — type only, no media --- */
+.page-hero {
+  position: relative;
+  overflow: clip;   /* contain hero orbs — no horizontal scroll */
+  /* Sticky header sits in flow — no fixed-header compensation */
+  padding-top: clamp(var(--space-5), 10vw, var(--space-7));
+  padding-bottom: clamp(var(--space-5), 8vw, var(--space-6));
+}
+
+/* Secondary page heroes (events, team): proportionate heading + tighter
+   vertical padding. The GAPS split hero keeps its full display scale. */
+.page-hero:not(.page-hero--split) {
+  padding-top: clamp(var(--space-3), 5vw, 56px);
+  padding-bottom: clamp(var(--space-3), 4vw, var(--space-4));
+}
+
+.page-hero:not(.page-hero--split) h1 {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.05;
+}
+
+/* Content above any orb */
+.page-hero .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Orb placement inside a page hero */
+.page-hero__orb {
+  top: -25%;
+  right: -6%;
+}
+
+.page-hero .label {
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.page-hero h1 {
+  max-width: 18ch;
+  margin-bottom: var(--space-3);
+}
+
+.page-hero__subline {
+  max-width: 52ch;
+  margin-bottom: var(--space-4);
+}
+
+/* Large button for page-level CTAs */
+.btn--lg {
+  padding: 18px 40px;
+  font-size: 1.0625rem;
+}
+
+/* --- Split layout: heading column left, copy column right --- */
+.split {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(var(--space-4), 6vw, var(--space-6));
+  align-items: start;
+}
+
+.split header .label {
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.split__copy p + p {
+  margin-top: var(--space-3);
+}
+
+@media (max-width: 860px) {
+  .split {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+/* --- Generic icon chip (white square, navy stroke icon) --- */
+.icon-chip {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-card);
+  color: var(--color-navy);
+}
+
+.icon-chip svg {
+  width: 22px;
+  height: 22px;
+}
+
+.icon-chip--lg {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+}
+
+.icon-chip--lg svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* --- Program pillars grid --- */
+.pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.pillar-card {
+  padding: var(--space-4) var(--space-3) var(--space-3);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.pillar-card:hover {
+  transform: translateY(-4px);
+}
+
+.pillar-card .icon-chip {
+  margin-bottom: var(--space-3);
+}
+
+.pillar-card__title {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-1);
+}
+
+.pillar-card__desc {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+@media (max-width: 980px) {
+  .pillar-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .pillar-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Benefits checklist: two columns of checkmarked lines --- */
+.benefits {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2) var(--space-5);
+  max-width: 920px;
+}
+
+.benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  color: var(--color-muted);
+}
+
+.benefits svg {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  color: var(--color-navy);
+}
+
+@media (max-width: 720px) {
+  .benefits {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- Qualifier list (who it is for) --- */
+.qualifiers {
+  margin-top: var(--space-3);
+  display: grid;
+  gap: var(--space-2);
+}
+
+.qualifiers li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  color: var(--color-muted);
+}
+
+.qualifiers svg {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  margin-top: 6px;
+  color: var(--color-navy);
+}
+
+/* --- Brochure band: one wide card row --- */
+.brochure-band {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.brochure-band__text {
+  flex: 1;
+  min-width: 240px;
+}
+
+.brochure-band__title {
+  font-size: clamp(1.375rem, 2.4vw, 1.75rem);
+  margin-bottom: 4px;
+}
+
+.brochure-band__text p {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+/* --- Final CTA band --- */
+.cta-band {
+  overflow: clip;   /* contain the orb */
+}
+
+.cta-band__orb {
+  top: -20%;
+  right: -8%;
+}
+
+.cta-band__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-band h2 {
+  max-width: 22ch;
+  margin-bottom: var(--space-2);
+}
+
+.cta-band p {
+  margin-bottom: var(--space-4);
+}
+
+/* --------------------------------------------------------------------------
+   9j2. GAPS brochure-page components (gaps.html)
+   All sections on this page run .section--dark, so token remaps supply
+   white headings / slate body / gold-primary automatically; rules below
+   use var(--color-gold) explicitly where gold is structural.
+   -------------------------------------------------------------------------- */
+
+/* Hero meta: the two byline items under the subline */
+.page-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  margin-bottom: var(--space-4);
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+.page-hero__meta span + span {
+  border-left: 1px solid var(--color-border);
+  padding-left: var(--space-3);
+}
+
+/* Maroon accent legibility: raw #7B1E22 fails contrast on pitch black,
+   so dark sections render it as a lifted maroon that still reads maroon */
+.section--dark .accent--maroon {
+  color: #B4585C;
+}
+
+/* --- 01 · Why grid: 6 dark cards, gold tag + quoted title --- */
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.why-card {
+  padding: var(--space-4) var(--space-3) var(--space-3);
+}
+
+.why-card__tag {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: var(--space-2);
+}
+
+.why-card__title {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-1);
+}
+
+.why-card__desc {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+@media (max-width: 980px) {
+  .why-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .why-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- 02 · Feature row (4-up) + stat bar --- */
+.feature-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.feature__num {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.375rem;
+  font-weight: 500;
+  color: var(--color-gold);
+  margin-bottom: var(--space-1);
+}
+
+.feature h3 {
+  font-size: 1.125rem;
+  margin-bottom: 4px;
+}
+
+.feature p {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+.stat-bar {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: var(--color-bg);   /* #141416 in dark sections */
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-3) var(--space-3);
+}
+
+.stat-bar__item {
+  flex: 1 1 140px;
+  padding-inline: var(--space-3);
+}
+
+.stat-bar__item + .stat-bar__item {
+  border-left: 1px solid var(--color-border);
+}
+
+.stat-bar__item strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-ink);
+}
+
+.stat-bar__item span {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+@media (max-width: 900px) {
+  .feature-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .feature-row {
+    grid-template-columns: 1fr;
+  }
+  /* Stat bar wraps 2×2; wrapped rows lose the left rule cleanly */
+  .stat-bar__item {
+    flex-basis: 45%;
+    padding-block: var(--space-1);
+  }
+  .stat-bar__item + .stat-bar__item {
+    border-left: 0;
+  }
+}
+
+/* --- 03 · Coach: merged cutout portrait left, quote + facts right --- */
+.coach {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(var(--space-4), 6vw, var(--space-6));
+  align-items: start;
+}
+
+/* Same merge treatment as the index hero, tuned for pitch black:
+   no card edge/border/fill — a soft GOLD radial glow (navy is invisible
+   on black) sits behind the transparent cutout for depth and warmth. */
+.coach__portrait {
+  position: relative;
+  aspect-ratio: 4 / 5;
+}
+
+.coach__portrait::before {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  background: radial-gradient(
+    60% 55% at 50% 45%,
+    rgba(184, 134, 11, 0.14) 0%,
+    rgba(184, 134, 11, 0.05) 45%,
+    transparent 75%
+  );
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+/* Grayscale scoped to the img only; contain + bottom anchor (defined-edge
+   cutout, never stretched); pixel-anchored bottom fade dissolves his
+   shoulders into the black section instead of hard-cropping. */
+.coach__portrait img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: grayscale(1) contrast(1.03);
+  mask-image: linear-gradient(to bottom, black calc(100% - 90px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 90px), transparent 100%);
+}
+
+.coach__quote {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: "SOFT" 100;
+  font-size: clamp(1.25rem, 2.2vw, 1.625rem);
+  line-height: 1.45;
+  color: var(--color-ink);
+  border-left: 2px solid var(--color-gold);
+  padding-left: var(--space-3);
+  margin-bottom: var(--space-4);
+  max-width: 44ch;
+}
+
+.coach__facts {
+  display: grid;
+  border-top: 1px solid var(--color-border);
+}
+
+.coach__facts li {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: var(--space-3);
+  align-items: baseline;
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.coach__fact-label {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.coach__facts p {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+@media (max-width: 900px) {
+  .coach {
+    grid-template-columns: 1fr;
+  }
+  .coach__portrait {
+    max-width: 380px;
+  }
+}
+
+@media (max-width: 480px) {
+  .coach__facts li {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
+/* --- 04 · Expert panel: photo cards in two subgroups --- */
+.panel-group__title {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin: var(--space-4) 0 var(--space-3);
+}
+
+.panel-group__title:first-of-type {
+  margin-top: 0;
+}
+
+/* Two-column grid: rows of two with equalized heights (grid items
+   stretch to their row track, so no card is ever taller than its row
+   partner). The 7th card takes .panel-card--full and spans both columns
+   as an intentional full-width closer — no stranded orphan. */
+.panel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: stretch;
+  gap: var(--space-3);
+}
+
+.panel-card--full {
+  grid-column: 1 / -1;
+}
+
+.panel-card {
+  position: relative;
+  overflow: hidden;   /* clips the hover hairline to the card radius */
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.panel-card:hover {
+  transform: translateY(-6px);   /* lift; .card deepens the shadow */
+}
+
+/* Accent hairline along the top edge, drawn in on hover — --color-navy
+   remaps to gold inside the dark GAPS section */
+.panel-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--color-navy);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.panel-card:hover::before {
+  transform: scaleX(1);
+}
+
+.panel-card__photo {
+  flex-shrink: 0;
+  width: 88px;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background-color: var(--color-bg-alt);  /* placeholder tone while loading */
+}
+
+/* Default is FULL COLOUR (touch devices can't hover); the unifying
+   greyscale-at-rest treatment is gated on hover capability below,
+   mirroring the team page. Zoom-on-hover stays for all devices. */
+.panel-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0);   /* colour everywhere by default */
+  transition:
+    filter 0.4s ease,
+    transform 0.4s ease;
+}
+
+.panel-card:hover .panel-card__photo img {
+  transform: scale(1.04);
+}
+
+/* Pointer devices only: greyscale at rest, colour resolves on hover */
+@media (hover: hover) and (pointer: fine) {
+  .panel-card__photo img {
+    filter: grayscale(1);
+  }
+
+  .panel-card:hover .panel-card__photo img {
+    filter: grayscale(0);
+  }
+}
+
+.panel-card__name {
+  font-size: 1.125rem;
+  margin-bottom: 2px;
+}
+
+.panel-card__role {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  margin-bottom: var(--space-1);
+}
+
+.panel-card__years {
+  display: inline-block;
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 2px;
+}
+
+.panel-card__focus {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+@media (max-width: 760px) {
+  /* Single column on mobile — the full-width 7th card folds in with it */
+  .panel-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- 05 · Curriculum: numbered rows — number | track | output --- */
+.curriculum {
+  border-top: 1px solid var(--color-border);
+}
+
+.curriculum__row {
+  display: grid;
+  grid-template-columns: 72px 1fr 300px;
+  gap: var(--space-2) var(--space-3);
+  align-items: start;
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.curriculum__num {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--color-gold);
+}
+
+.curriculum__row h3 {
+  font-size: 1.25rem;
+  margin-bottom: 4px;
+}
+
+.curriculum__row p {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+.curriculum__output-label {
+  display: block;
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 2px;
+}
+
+.curriculum__output > p:not(.curriculum__counsel) {
+  color: var(--color-ink);
+}
+
+.curriculum__counsel {
+  margin-top: 2px;
+  font-size: 0.8125rem;
+  color: var(--color-gold);
+}
+
+@media (max-width: 860px) {
+  /* Stack: number+track, output drops below the track column */
+  .curriculum__row {
+    grid-template-columns: 56px 1fr;
+  }
+  .curriculum__output {
+    grid-column: 2;
+  }
+}
+
+/* --- 08 · Pricing: single centered premium card --- */
+.pricing-section {
+  overflow: clip;   /* contain the orb */
+}
+
+.pricing-section__orb {
+  top: 10%;
+  right: -10%;
+}
+
+.pricing-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.section-head--center {
+  text-align: center;
+}
+
+.pricing-card {
+  width: min(520px, 100%);
+  background-color: var(--color-bg);            /* lifted dark surface */
+  border: 1px solid rgba(184, 134, 11, 0.45);   /* gold border accent */
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card-hover);
+  padding: var(--space-4);
+}
+
+.pricing-card__tag {
+  display: inline-block;
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: var(--space-2);
+}
+
+.pricing-card__price {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4.5vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--color-ink);
+}
+
+.pricing-card__price span {
+  font-size: 0.5em;
+  color: var(--color-muted);
+}
+
+.pricing-card__term {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.pricing-card__list {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.pricing-card__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+.pricing-card__list svg {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  color: var(--color-gold);
+}
+
+.pricing-card__fit {
+  font-size: 0.9375rem;
+  color: var(--color-ink);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.pricing-card__fit span {
+  display: block;
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 2px;
+}
+
+.pricing-card__cta {
+  width: 100%;
+  margin-top: var(--space-3);
+}
+
+.pricing-note {
+  margin-top: var(--space-3);
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+/* --- Final apply: growth graph (3 steps as plotted data points) ---
+   Area-chart treatment: faint gridlines + baseline, a rising bezier
+   curve with a soft gold gradient fill, three glowing plotted points
+   with dotted drop-lines down to their text columns. The SVG keeps its
+   intrinsic ratio (no distortion) and the drop-lines land on the text
+   column centres (1/6, 1/2, 5/6 of the width). Deliberately calm — the
+   gold Apply CTA below still owns the section. */
+.growth {
+  margin-bottom: var(--space-4);
+}
+
+.growth__chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 1;
+  margin-bottom: var(--space-3);
+}
+
+/* In-chart point tags */
+.growth__num {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  fill: var(--color-gold);
+}
+
+/* Draw-in choreography (triggered by .diagram-in from main.js):
+   curve draws → area fades → points pop (staggered via --d) */
+.growth__curve {
+  stroke-dasharray: 1;
+  transition: stroke-dashoffset 1.1s var(--ease-out) 0.1s;
+}
+
+.growth__area {
+  transition: opacity 0.7s ease 0.55s;
+}
+
+.growth__drops {
+  transition: opacity 0.5s ease 0.8s;
+}
+
+.growth__pt {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    transform 0.5s var(--ease-out) var(--d, 0s),
+    opacity 0.4s ease var(--d, 0s);
+}
+
+/* Initial hidden states — only when JS will animate them */
+html.js-ready:not(.no-motion) .growth:not(.diagram-in) .growth__curve {
+  stroke-dashoffset: 1;
+}
+
+html.js-ready:not(.no-motion) .growth:not(.diagram-in) .growth__area,
+html.js-ready:not(.no-motion) .growth:not(.diagram-in) .growth__drops {
+  opacity: 0;
+}
+
+html.js-ready:not(.no-motion) .growth:not(.diagram-in) .growth__pt {
+  opacity: 0;
+  transform: scale(0.4);
+}
+
+/* Step text: three EQUAL columns under their drop-lines, one common
+   baseline. gap must stay 0 on desktop: any fixed gap shifts the outer
+   column centres off the 1/6 and 5/6 marks the SVG points sit on
+   (the SVG scales with width, a px gap doesn't). Text is centred, so
+   the columns don't need a gap for separation. */
+.growth__labels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  text-align: center;
+}
+
+.growth__label-num {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--color-gold);
+  margin-bottom: 6px;
+}
+
+.growth__label p {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+  max-width: 24ch;
+  margin-inline: auto;
+}
+
+/* Contact card: photo left (gold hairline frame, matching the team
+   treatment), then label / name / contact chips right. Tight padding —
+   the card is filled, not half empty. */
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+  max-width: 760px;
+}
+
+.contact-card__photo {
+  flex-shrink: 0;
+  width: 104px;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border: 1px solid rgba(184, 134, 11, 0.45);
+  border-radius: 14px;
+  background-color: var(--color-bg-alt);
+}
+
+.contact-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.contact-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.contact-card__label {
+  display: block;
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 2px;
+}
+
+.contact-card__name {
+  font-family: var(--font-heading);
+  font-size: 1.375rem;
+  color: var(--color-ink);
+  margin-bottom: var(--space-2);
+}
+
+/* Contact channels as bordered chips: call / WhatsApp / email */
+.contact-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+}
+
+.contact-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid rgba(184, 134, 11, 0.4);
+  border-radius: 10px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+}
+
+.contact-chip:hover {
+  border-color: rgba(184, 134, 11, 0.75);
+  background-color: rgba(184, 134, 11, 0.07);
+}
+
+.contact-chip svg {
+  flex-shrink: 0;
+  width: 15px;
+  height: 15px;
+  color: var(--color-gold);
+}
+
+/* Long addresses truncate inside their chip rather than overflowing */
+.contact-chip span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  /* Stack: photo on top, then label + name, then full-width chips */
+  .contact-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contact-card__body {
+    width: 100%;
+  }
+
+  .contact-card__links {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 640px) {
+  /* The chart stays ONE intact horizontal graphic, just smaller.
+     In-chart 01/02/03 tags would render ~8px — hide them; the numbers
+     live in the stacked text blocks below. */
+  .growth__num {
+    display: none;
+  }
+
+  .growth__labels {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    text-align: left;
+  }
+
+  .growth__label p {
+    margin-inline: 0;
+    max-width: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9j3. GAPS brochure v2 — page-specific visuals
+   Hub-and-spoke, calendar strip, orbit, value stack, flags, hero arrows.
+   Diagram draw-ins follow the js-ready pattern: initial hidden states
+   exist ONLY under html.js-ready:not(.no-motion); main.js adds
+   .diagram-in on scroll-in. No JS / reduced motion → fully drawn.
+   -------------------------------------------------------------------------- */
+
+/* --- Split hero: type left, merged portrait right ---
+   Top-aligned like the home hero: the portrait's top edge lines up with
+   the label so the two columns read as one composed block. */
+.page-hero__grid {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: clamp(var(--space-4), 5vw, var(--space-6));
+  align-items: start;
+}
+
+.gaps-hero__media {
+  position: relative;
+}
+
+/* Same merge treatment as the coach portrait: gold radial, grayscale
+   cutout, bottom fade — no card edge */
+.gaps-hero__portrait {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-height: 480px;
+  max-width: calc(480px * 4 / 5);
+  margin-inline: auto;
+}
+
+.gaps-hero__portrait::before {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  background: radial-gradient(
+    60% 55% at 50% 45%,
+    rgba(184, 134, 11, 0.14) 0%,
+    rgba(184, 134, 11, 0.05) 45%,
+    transparent 75%
+  );
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.gaps-hero__portrait img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: grayscale(1) contrast(1.03);
+  mask-image: linear-gradient(to bottom, black calc(100% - 70px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 70px), transparent 100%);
+}
+
+/* Faint upward growth arrows drifting behind the portrait — subtle */
+.gaps-hero__arrows {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: var(--color-gold);
+}
+
+.gaps-hero__arrows svg {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  opacity: 0;
+  animation: arrow-rise 7s ease-in-out infinite;
+}
+
+.gaps-hero__arrows svg:nth-child(1) { left: 4%;  bottom: 20%; animation-delay: 0s; }
+.gaps-hero__arrows svg:nth-child(2) { left: 86%; bottom: 38%; width: 24px; height: 24px; animation-delay: 2.3s; }
+.gaps-hero__arrows svg:nth-child(3) { left: 12%; bottom: 58%; width: 20px; height: 20px; animation-delay: 4.6s; }
+
+@keyframes arrow-rise {
+  0%   { transform: translateY(16px); opacity: 0; }
+  35%  { opacity: 0.18; }
+  70%  { opacity: 0.08; }
+  100% { transform: translateY(-26px); opacity: 0; }
+}
+
+/* --- Greek temple (single SVG) + pillar text blocks beneath ---
+   The building is ONE scalable graphic — pediment, entablature, three
+   fluted columns on a stepped stylobate — so it stays horizontal and
+   intact at every width. Text lives below it, one block per column
+   (grid cells match the SVG's column positions at 1/6, 1/2, 5/6). */
+.temple {
+  max-width: 780px;
+  margin-inline: auto;
+}
+
+.temple__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: var(--space-4);
+}
+
+.temple__labels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.temple__label {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: var(--space-1);
+}
+
+.temple__title {
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+}
+
+.temple__line {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+/* --- Hub-and-spoke diagram (Pillar 01) --- */
+.hub {
+  position: relative;
+  width: min(560px, 100%);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+.hub__center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: clamp(120px, 26%, 150px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid var(--color-gold);
+  background-color: var(--color-bg);          /* #141416 in dark scope */
+  box-shadow: 0 0 40px rgba(184, 134, 11, 0.12);
+  text-align: center;
+}
+
+.hub__you {
+  font-family: var(--font-heading);
+  font-size: 1.375rem;
+  color: var(--color-ink);
+  line-height: 1.1;
+}
+
+.hub__biz {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-top: 4px;
+}
+
+/* Each arm: rotated ray from the centre; the label counter-rotates so it
+   stays upright at the spoke's end */
+.hub__arm {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44%;
+  display: flex;
+  align-items: center;
+  transform: rotate(var(--a));
+  transform-origin: left center;
+  padding-left: clamp(60px, 14%, 78px);   /* start beyond the centre circle */
+}
+
+.hub__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(184, 134, 11, 0.55), rgba(184, 134, 11, 0.12));
+  transform-origin: left center;
+  transition: transform 0.7s var(--ease-out) var(--d, 0s);
+}
+
+.hub__node {
+  transform: rotate(calc(-1 * var(--a)));
+  white-space: nowrap;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 7px 14px;
+  transition: opacity 0.5s ease calc(var(--d, 0s) + 0.35s);
+}
+
+/* Draw-in states — hidden only when JS will animate them */
+html.js-ready:not(.no-motion) .hub:not(.diagram-in) .hub__line {
+  transform: scaleX(0);
+}
+
+html.js-ready:not(.no-motion) .hub:not(.diagram-in) .hub__node {
+  opacity: 0;
+}
+
+/* --- Pull quote (shared on this page) --- */
+.pull-quote {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 400;
+  font-variation-settings: "SOFT" 100;
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  line-height: 1.5;
+  color: var(--color-ink);
+  border-left: 2px solid var(--color-gold);
+  padding-left: var(--space-3);
+  margin-top: var(--space-5);
+  max-width: 52ch;
+}
+
+/* --- Calendar strip (Pillar 02) --- */
+.cal-strip {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.cal-strip__month {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: var(--space-3) 6px;
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background-color: var(--color-bg);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.cal-strip__dots {
+  display: flex;
+  gap: 7px;
+}
+
+.cal-strip__dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: var(--color-gold);
+  box-shadow: 0 0 8px rgba(184, 134, 11, 0.4);
+}
+
+.cal-strip__note {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  margin-bottom: var(--space-4);
+}
+
+/* 24 + 6 = 30 equation block */
+.equation {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  padding: var(--space-4) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background-color: var(--color-bg);
+  margin-bottom: var(--space-3);
+}
+
+.equation__num {
+  font-family: var(--font-heading);
+  font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+  font-weight: 500;
+  color: var(--color-gold);
+  line-height: 1;
+}
+
+.equation__word {
+  font-size: 1.0625rem;
+  color: var(--color-muted);
+}
+
+.equation__op {
+  font-family: var(--font-heading);
+  font-size: 1.875rem;
+  color: var(--color-ink);
+}
+
+/* Topic tag pills */
+.topic-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.topic-tags li {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+}
+
+/* --- Germany: flags bridge + stat cards --- */
+.bridge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.bridge__flag {
+  width: clamp(130px, 16vw, 190px);
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+}
+
+/* Handshake between the two flags, sized to match their presence */
+.bridge__hands {
+  flex: 0 0 auto;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  line-height: 1;
+}
+
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+}
+
+.stat-card {
+  padding: var(--space-3);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+}
+
+.stat-card strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.375rem;
+  font-weight: 500;
+  color: var(--color-gold);
+  margin-bottom: 4px;
+}
+
+.stat-card p {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+/* --- Astro (Pillar 03): deliberately calm --- */
+.astro {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: clamp(var(--space-4), 5vw, var(--space-6));
+  align-items: center;
+}
+
+.astro__cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+
+.astro__card {
+  padding: var(--space-3);
+}
+
+.astro__card h3 {
+  font-size: 1.125rem;
+  margin-bottom: 4px;
+}
+
+.astro__card p {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+/* Refined orbit — still deliberately SECONDARY in weight: quiet rings,
+   a slow gentle drift on the labels (killed by reduced motion), nothing
+   louder than the sections around it. */
+.orbit {
+  position: relative;
+  width: min(360px, 100%);
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+/* Outer whisper ring for depth */
+.orbit::before {
+  content: "";
+  position: absolute;
+  inset: 2%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+.orbit__ring {
+  position: absolute;
+  inset: 12%;
+  border: 1px dashed rgba(184, 134, 11, 0.3);
+  border-radius: 50%;
+}
+
+.orbit__center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 38%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid rgba(184, 134, 11, 0.25);
+  background-color: var(--color-bg);
+  box-shadow: 0 0 32px rgba(184, 134, 11, 0.08);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--color-ink);
+  padding: var(--space-1);
+}
+
+.orbit__node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 6px 13px;
+  animation: orbit-drift 7s ease-in-out infinite;
+}
+
+/* Tiny gold marker ties each label to the accent system */
+.orbit__node::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--color-gold);
+}
+
+.orbit__node--t { top: 12%;  left: 50%; animation-delay: 0s; }
+.orbit__node--r { top: 50%;  left: 88%; animation-delay: 1.75s; }
+.orbit__node--b { top: 88%;  left: 50%; animation-delay: 3.5s; }
+.orbit__node--l { top: 50%;  left: 12%; animation-delay: 5.25s; }
+
+@keyframes orbit-drift {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50%      { transform: translate(-50%, -50%) translateY(-4px); }
+}
+
+.orbit__caption {
+  position: absolute;
+  bottom: -34px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* --- The honest maths --- */
+.maths {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: clamp(var(--space-4), 5vw, var(--space-6));
+  align-items: start;
+}
+
+.value-list {
+  border-top: 1px solid var(--color-border);
+}
+
+.value-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+.value-row__amt {
+  font-family: var(--font-heading);
+  font-size: 1.0625rem;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.maths-panel {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-4);
+}
+
+.maths-panel__label {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: var(--space-1);
+}
+
+/* Worth figure: RED with the strikethrough drawing in via .diagram-in */
+.maths-panel__worth {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+  font-weight: 500;
+  color: #D65A52;   /* red — the crossed-out number */
+  margin-bottom: var(--space-3);
+}
+
+.maths-panel__worth::after {
+  content: "";
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  top: 55%;
+  height: 2px;
+  background-color: #D65A52;
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition: transform 0.6s var(--ease-out) 0.9s;
+}
+
+html.js-ready:not(.no-motion) .maths-panel:not(.diagram-in) .maths-panel__worth::after {
+  transform: scaleX(0);
+}
+
+/* The offer box: green-bordered, softly glowing, faintly green-filled
+   panel holding the label, price and value bar — clearly separates the
+   price-you-pay from the struck-through worth above it */
+.offer-box {
+  border: 1px solid rgba(62, 207, 122, 0.55);
+  border-radius: 14px;
+  background-color: rgba(62, 207, 122, 0.07);
+  box-shadow:
+    0 0 26px rgba(62, 207, 122, 0.18),
+    inset 0 0 22px rgba(62, 207, 122, 0.05);
+  padding: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.offer-box__label {
+  color: rgba(62, 207, 122, 0.85);   /* label goes green inside the box */
+}
+
+/* Caption closes the box — no divider needed inside it (the box's own
+   bottom margin separates it from the subsidy block below) */
+.offer-box .value-bar__caption {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+/* The money reveal: large green with a soft glow — pops against black */
+.maths-panel__price {
+  font-family: var(--font-heading);
+  font-size: clamp(2.75rem, 5.5vw, 3.5rem);
+  font-weight: 500;
+  color: #3ECF7A;
+  text-shadow:
+    0 0 24px rgba(62, 207, 122, 0.45),
+    0 0 64px rgba(62, 207, 122, 0.18);
+  line-height: 1.1;
+  margin-bottom: var(--space-3);
+}
+
+/* Value bar: the 2.4L sliver against the 21L bar */
+.value-bar {
+  height: 10px;
+  border-radius: var(--radius-pill);
+  background-color: rgba(184, 134, 11, 0.15);
+  overflow: hidden;
+  margin-bottom: var(--space-1);
+}
+
+.value-bar__fill {
+  display: block;
+  width: 11.4%;   /* 2.4L of 21L */
+  height: 100%;
+  border-radius: inherit;
+  background-color: var(--color-gold);
+}
+
+.value-bar__caption {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.subsidy-block__label {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: var(--space-1);
+}
+
+.subsidy-block__range {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 500;
+  color: var(--color-ink);
+  margin-bottom: 4px;
+}
+
+.subsidy-block__note {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+}
+
+/* --- High-intent section CTA (after panel proof + after the maths) --- */
+.section-cta {
+  margin-top: var(--space-5);
+}
+
+/* Centred CTA under the testimonials */
+.vt-cta {
+  margin-top: var(--space-5);
+  text-align: center;
+}
+
+.vt-cta p {
+  max-width: none;
+  margin-bottom: var(--space-3);
+  font-size: 1.0625rem;
+  color: var(--color-ink);
+}
+
+/* --- Pricing card extras (badge + name) --- */
+.pricing-card__badge {
+  display: inline-block;
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  border: 1px solid rgba(184, 134, 11, 0.45);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+  margin-bottom: var(--space-3);
+}
+
+.pricing-card__tag {
+  display: block;
+}
+
+.pricing-card__name {
+  font-size: 1.75rem;
+  margin-bottom: var(--space-1);
+}
+
+/* --- Responsive: diagrams degrade to stacked/simple --- */
+@media (max-width: 900px) {
+  .page-hero__grid,
+  .astro,
+  .maths {
+    grid-template-columns: 1fr;
+  }
+
+  .gaps-hero__portrait {
+    max-height: 380px;
+    max-width: calc(380px * 4 / 5);
+    margin-inline: 0;
+  }
+
+  .orbit {
+    margin-top: var(--space-4);
+  }
+
+  .stat-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  /* Temple graphic stays ONE horizontal building, just smaller; only
+     the text blocks re-stack into a left-aligned list beneath it */
+  .temple__labels {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    text-align: left;
+  }
+
+  .cal-strip {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  /* Hub degrades to a stacked layout: centre node on top, the six
+     domains as a centred wrapping chip row beneath — no radial math */
+  .hub {
+    aspect-ratio: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .hub__center {
+    position: static;
+    transform: none;
+    width: 132px;
+    flex: 0 0 100%;
+    max-width: 132px;
+    margin-inline: auto;
+    margin-bottom: var(--space-2);
+  }
+
+  .hub__arm {
+    position: static;
+    transform: none;
+    width: auto;
+    padding-left: 0;
+  }
+
+  .hub__line {
+    display: none;
+  }
+
+  .hub__node {
+    transform: none;
+    opacity: 1 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .cal-strip {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .stat-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .astro__cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   9k. Events page (events.html)
+   Cards are rendered by main.js from the EVENTS array into a responsive
+   grid: 3 columns desktop → 2 tablet → 1 mobile. Vertical card:
+   thumbnail on top, details below. Past cards drop the Register button
+   (in JS) and render at reduced weight. access:"gaps" cards render
+   locked — dimmed thumb, gold lock badge, masked details, Explore GAPS.
+   -------------------------------------------------------------------------- */
+/* Intrinsic track sizing: cards hold 300–380px whatever the count, so
+   a single upcoming event renders as one deliberate card, not a lone
+   item stranded in a third of a rigid 3-track grid. */
+.events-grid {
+  display: grid;
+  /* 352px cap: three tracks + two gaps = exactly the 1104px container,
+     so three cards sit on one row at full width */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 352px));
+  justify-content: flex-start;
+  gap: var(--space-3);
+}
+
+.event-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;   /* thumbnail sits flush with the card edge */
+}
+
+/* Thumbnail: fixed 16/9, image covers — no source file can distort it */
+.event-card__thumb {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-bg-alt);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.event-card__thumb img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Body is a column; the CTA pins to the bottom so buttons align across
+   a row regardless of text length */
+.event-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--space-3);
+}
+
+.event-card__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-bottom: var(--space-2);
+}
+
+/* Date badge */
+.event-card__date {
+  display: inline-block;
+  padding: 5px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  background-color: var(--color-bg);
+}
+
+/* Mode pill — subtle accent tint, never a solid fill */
+.event-card__mode {
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.event-card__mode--online {
+  color: var(--color-navy);
+  background-color: rgba(18, 41, 74, 0.08);
+}
+
+.event-card__mode--offline {
+  color: var(--color-maroon);
+  background-color: rgba(123, 30, 34, 0.07);
+}
+
+.event-card__title {
+  font-size: 1.375rem;
+  margin-bottom: var(--space-1);
+}
+
+.event-card__time {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-ink);
+  margin-bottom: var(--space-1);
+}
+
+.event-card__desc {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+/* CTA pins to the card bottom so buttons align across a row; the desc's
+   bottom margin guarantees breathing room when the card has no spare
+   height for the auto margin to absorb. */
+.event-card__cta {
+  margin-top: auto;
+  align-self: flex-start;
+  padding-top: 11px;
+  padding-bottom: 11px;
+  font-size: 0.875rem;
+}
+
+.event-card__desc {
+  margin-bottom: var(--space-3);
+}
+
+/* Muted recording link on past public events (only if a URL exists) */
+.event-card__recording {
+  margin-top: auto;
+  align-self: flex-start;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  padding-bottom: 2px;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size var(--duration-sweep) var(--ease-sweep);
+}
+
+.event-card__recording:hover {
+  background-size: 100% 1px;
+}
+
+/* --- TBA cards: dateless announced-soon sessions, members-first ---
+   Gold hairline at rest (matching members-only past events); the badge
+   reuses the .pe-card__lock treatment for visual consistency and gets a
+   finite settle-pulse on scroll-in (via .lock-in), not a throb. */
+.event-card--mfirst {
+  border-color: rgba(184, 134, 11, 0.45);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .event-card--mfirst:hover {
+    border-color: rgba(184, 134, 11, 0.65);
+  }
+
+  .event-card--mfirst:hover .pe-card__lock {
+    background-color: #D2A016;
+    box-shadow: 0 0 28px rgba(184, 134, 11, 0.65);
+  }
+}
+
+/* Scroll-in: two slow pulses, then the glow settles */
+.event-card--mfirst.lock-in .pe-card__lock {
+  animation: badge-settle 2.2s ease-in-out 0.3s 2;
+}
+
+@keyframes badge-settle {
+  0%, 100% { box-shadow: 0 0 18px rgba(184, 134, 11, 0.45); }
+  50%      { box-shadow: 0 0 30px rgba(184, 134, 11, 0.75); }
+}
+
+/* Gold-bordered secondary CTA on TBA cards */
+.event-card__cta--gold {
+  border-color: rgba(184, 134, 11, 0.6);
+  color: var(--color-gold);
+}
+
+.event-card__cta--gold:hover {
+  border-color: var(--color-gold);
+  background-color: rgba(184, 134, 11, 0.06);
+}
+
+/* Members-first note under the CTA */
+.event-card__note {
+  margin-top: var(--space-2);
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+/* --- Past cards: same bones, lower weight --- */
+.event-card--past {
+  box-shadow: none;   /* no lift — flat, archival */
+}
+
+.event-card--past .event-card__thumb img {
+  filter: grayscale(0.5);
+  opacity: 0.9;
+}
+
+.event-card--past .event-card__title {
+  font-size: 1.1875rem;
+}
+
+.event-card--past .event-card__date {
+  color: var(--color-muted);
+}
+
+/* --------------------------------------------------------------------------
+   9k2. Locked (GAPS-exclusive) event cards
+   Title + date stay readable so visitors see what they're missing;
+   time/description blur behind the mask; the gold lock badge sits
+   centred on the dimmed thumbnail. main.js adds .lock-in when the card
+   scrolls into view: the shackle clicks shut once, then the badge
+   settles into a slow glow loop. Without .lock-in (reduced motion,
+   no JS) the lock is simply static.
+   -------------------------------------------------------------------------- */
+.event-card--locked .event-card__thumb img {
+  filter: blur(3px) brightness(0.75) saturate(0.7);
+  transform: scale(1.04);   /* hide blur-softened edges */
+}
+
+/* Centred gold lock badge over the thumb */
+.lock-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: rgba(14, 17, 22, 0.55);
+  border: 1px solid rgba(184, 134, 11, 0.5);
+  color: var(--color-gold);
+}
+
+.lock-badge svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* Shackle "clicks shut" once when .lock-in lands… */
+.event-card--locked.lock-in .lock-badge__shackle {
+  animation: lock-shut 0.5s var(--ease-out) both;
+}
+
+@keyframes lock-shut {
+  0%   { transform: translateY(-2.5px); }
+  60%  { transform: translateY(0.6px); }
+  100% { transform: translateY(0); }
+}
+
+/* …then the badge settles into a slow, soft gold glow loop */
+.event-card--locked.lock-in .lock-badge {
+  animation: lock-glow 3.2s ease-in-out 0.6s infinite;
+}
+
+@keyframes lock-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(184, 134, 11, 0); }
+  50%      { box-shadow: 0 0 22px 2px rgba(184, 134, 11, 0.35); }
+}
+
+/* Masked detail lines — present but unreadable, reinforcing exclusivity */
+.event-card__masked {
+  filter: blur(4px);
+  opacity: 0.55;
+  user-select: none;
+  pointer-events: none;
+}
+
+.event-card__lock-title {
+  margin-top: var(--space-2);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--color-ink);
+}
+
+.event-card__lock-sub {
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+  margin-bottom: var(--space-2);
+}
+
+/* --------------------------------------------------------------------------
+   9k3. Past events grid (events.html) — rendered from PAST_EVENTS
+   Cover with a dark gradient meta strip (date · venue) bottom-left and
+   an optional gold members-only lock badge; title / tagline / summary
+   below. 2 columns desktop, 1 on mobile.
+   -------------------------------------------------------------------------- */
+/* Paged carousel wrapper: arrows sit OUTSIDE the grid (absolute at the
+   container's flanks), dots below. Desktop pages slide horizontally;
+   mobile turns into a native scroll-snap swiper (see media query). */
+.pe-carousel {
+  position: relative;
+}
+
+.pe-carousel__viewport {
+  overflow: hidden;
+}
+
+.pe-carousel__track {
+  display: flex;
+  transition: transform 0.5s ease;   /* horizontal slide, not a fade */
+}
+
+.pe-carousel__slide {
+  flex: 0 0 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);   /* 3 × 2 = 6 per slide */
+  gap: var(--space-3);
+  align-content: start;
+  padding: 4px;   /* room for card borders/shadows inside the clip */
+}
+
+.pe-carousel__arrow {
+  position: absolute;
+  top: 34%;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-card);
+  color: var(--color-ink);
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.pe-carousel__arrow--prev { left: -62px; }
+.pe-carousel__arrow--next { right: -62px; }
+
+.pe-carousel__arrow svg {
+  width: 28px;
+  height: 28px;
+}
+
+.pe-carousel__arrow:hover:not(:disabled) {
+  color: var(--color-gold);
+  border-color: rgba(184, 134, 11, 0.6);
+}
+
+.pe-carousel__arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.pe-carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: var(--space-3);
+}
+
+.pe-carousel__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--color-muted);
+  background-color: transparent;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.pe-carousel__dot.is-active {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+}
+
+@media (max-width: 1240px) {
+  /* Not enough page margin for fully-outside arrows — tuck them in,
+     overlapping the grid edge with a solid ground */
+  .pe-carousel__arrow--prev { left: -10px; }
+  .pe-carousel__arrow--next { right: -10px; }
+}
+
+.pe-card {
+  overflow: hidden;   /* cover sits flush with the card edge */
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease,
+    border-color 0.4s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pe-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: rgba(184, 134, 11, 0.65);   /* gold hairline brightens */
+  }
+
+  .pe-card:hover .pe-card__cover img {
+    transform: scale(1.05);
+  }
+
+  .pe-card:hover .pe-card__lock {
+    background-color: #D2A016;
+    box-shadow: 0 0 28px rgba(184, 134, 11, 0.65);
+  }
+}
+
+/* Cover: 16/9, dark placeholder tone shows if the image is missing
+   (the img removes itself on error) */
+.pe-card__cover {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: #14161A;
+}
+
+.pe-card__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease-out);
+}
+
+/* (The banner artwork carries date/venue itself, so no data strip or
+   legibility gradient is overlaid — only the corner badge.) */
+
+/* Members-only badge: SOLID gold with dark text and a soft gold glow —
+   a deliberate premium signal, not an outline afterthought. Brightens
+   on card hover. */
+.pe-card__lock {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  background-color: #B8860B;
+  box-shadow: 0 0 18px rgba(184, 134, 11, 0.45);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #0A0A0B;
+  transition:
+    background-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.pe-card__lock svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Members-only cards carry a gold hairline at rest — distinct from open
+   events at a glance */
+.pe-card--members {
+  border-color: rgba(184, 134, 11, 0.45);
+}
+
+.pe-card__body {
+  padding: var(--space-3);
+}
+
+.pe-card__title {
+  font-size: 1.375rem;
+  margin-bottom: 4px;
+}
+
+.pe-card__tagline {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-ink);
+  margin-bottom: var(--space-2);
+}
+
+.pe-card__summary {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+  margin-bottom: var(--space-2);
+}
+
+.pe-card__access {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* --- Empty state: "New sessions announced weekly" --- */
+.events-empty {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-card);
+}
+
+.events-empty h3 {
+  font-size: 1.25rem;
+  margin-bottom: 2px;
+}
+
+.events-empty p {
+  font-size: 0.9375rem;
+  color: var(--color-muted);
+}
+
+@media (max-width: 640px) {
+  .events-empty {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 760px) {
+  /* Mobile carousel: native horizontal scroll-snap, one card per view.
+     Slide wrappers dissolve so the track is a flat row of cards. */
+  .pe-carousel__arrow {
+    display: none;
+  }
+
+  .pe-carousel__viewport {
+    overflow: visible;
+  }
+
+  .pe-carousel__track {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    transform: none !important;
+    transition: none;
+    gap: 12px;
+    padding: 4px 4px 8px;
+  }
+
+  .pe-carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pe-carousel__slide {
+    display: contents;
+  }
+
+  .pe-carousel .pe-card {
+    flex: 0 0 86%;
+    scroll-snap-align: center;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   10. Dark section theme — .section--dark
+   THE single source of truth for dark styling. Apply the class to any
+   <section class="section section--dark"> and every component inside
+   re-themes through the scoped token overrides below. Never hardcode
+   black per section anywhere else.
+
+   Accent logic on black: navy is invisible, so --color-navy is remapped
+   to gold inside dark sections — every "primary accent" consumer
+   (accent words, labels, links, icon chips, button fills, active states)
+   flips to gold automatically. Maroon stays itself as secondary
+   punctuation. Same ~8% sparseness rule applies.
+   -------------------------------------------------------------------------- */
+.section--dark {
+  /* --- Scoped token overrides — this is the theme --- */
+  --color-ink: #FFFFFF;                       /* headings, strong text */
+  --color-muted: #A2A6AD;                     /* body — light slate, not white */
+  --color-border: rgba(255, 255, 255, 0.12);  /* hairlines, dividers */
+  --color-bg: #141416;                        /* card/chip surfaces on black */
+  --color-bg-alt: #1A1A1D;                    /* image placeholder tones */
+  --color-navy: #B8860B;                      /* ACCENT REMAP: gold leads on black */
+  --shadow-card:                              /* depth from black, not white-mode grey */
+    0 1px 2px rgba(0, 0, 0, 0.5),
+    0 12px 32px rgba(0, 0, 0, 0.55);
+  --shadow-card-hover:
+    0 2px 4px rgba(0, 0, 0, 0.55),
+    0 20px 48px rgba(0, 0, 0, 0.65);
+  --pulse-ring: rgba(184, 134, 11, 0.3);      /* gold play-button pulse */
+
+  /* --- Ground: pitch black + inverted grid (white lines at 4%) --- */
+  color: var(--color-muted);
+  background-color: #0A0A0B;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: var(--grid-cell) var(--grid-cell);
+
+  /* Hard edge against adjacent white sections — solid grounds meet at a
+     crisp line; the hairline reads as a deliberate seam, never a fade. */
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+/* Card borders sit slightly quieter than hairlines on black */
+.section--dark .card {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Gutter numeral needs a touch more presence on black */
+.section--dark[data-num]::before {
+  opacity: 0.1;
+}
+
+/* --- Buttons: gold-filled with black text; hover sweeps maroon and the
+   text flips to white for contrast (color transition lives on .btn). --- */
+.section--dark .btn--primary {
+  color: #0A0A0B;   /* black text on the gold fill (::before = remapped navy) */
+}
+
+.section--dark .btn--primary:hover {
+  color: #FFFFFF;   /* readable over the maroon sweep (::after) */
+}
+
+/* --- Orbs: navy is invisible on black, so a navy orb inside a dark
+   section renders as gold. Author gold/maroon orbs directly when you
+   can; this remap is the safety net. One orb per dark section, max. --- */
+.section--dark .orb--navy {
+  background: radial-gradient(circle, var(--color-gold) 0%, transparent 70%);
+}
+
+.section--dark .orb--navy,
+.section--dark .orb--gold {
+  opacity: 0.16;
+}
+
+.section--dark .orb--maroon {
+  opacity: 0.18;
+}
+
+/* --- Event mode pills: tints rebuilt for black (the white-mode rgba
+   tints of navy/maroon vanish on a dark ground) --- */
+.section--dark .event-card__mode--online {
+  color: var(--color-gold);
+  background-color: rgba(184, 134, 11, 0.14);
+}
+
+.section--dark .event-card__mode--offline {
+  color: #DCA3A5;   /* lightened maroon — the raw #7B1E22 fails contrast on black */
+  background-color: rgba(123, 30, 34, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   10b. GAPS page mobile overlay — dark theme (body.page-gaps only)
+   The shared overlay is white; on the pitch-black GAPS page it becomes
+   black with white links, gold active/hover, hairline dividers, and the
+   gold-filled CTA. Behaviour (open/close, stagger, scroll lock) is
+   untouched — visual theme only. Other pages keep the light overlay.
+   -------------------------------------------------------------------------- */
+.page-gaps .mobile-menu {
+  background-color: #0A0A0B;
+  align-items: stretch;      /* full-width links so the dividers span */
+  justify-content: flex-start;
+  gap: 0;
+  padding-top: calc(var(--promo-h) + var(--header-height) + var(--space-3));
+  padding-bottom: var(--space-4);
+  overflow-y: auto;          /* 8 links + CTAs must fit short phones */
+}
+
+/* Section-index links: more compact than the site-nav overlay type,
+   since this menu lists eight destinations */
+.page-gaps .mobile-menu__link {
+  font-size: 1.375rem;
+  color: #FFFFFF;
+  padding-block: var(--space-2);
+  border-bottom: 1px solid rgba(184, 134, 11, 0.18);
+  transition: color 0.25s ease;
+}
+
+.page-gaps .mobile-menu__link:hover,
+.page-gaps .mobile-menu__link:active,
+.page-gaps .mobile-menu__link[aria-current="page"] {
+  color: var(--color-gold);
+}
+
+/* CTA stack under the links */
+.page-gaps .mobile-menu__ctas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+/* Primary: gold fill, black text (maroon sweep on hover flips it white) */
+.page-gaps .mobile-menu .btn--primary {
+  --color-navy: var(--color-gold);   /* remap: ::before fill goes gold */
+  color: #0A0A0B;
+  justify-content: center;
+}
+
+.page-gaps .mobile-menu .btn--primary:hover {
+  color: #FFFFFF;
+}
+
+/* Secondary: gold outline */
+.page-gaps .mobile-menu .btn--ghost {
+  border-color: rgba(184, 134, 11, 0.6);
+  color: var(--color-gold);
+  background-color: transparent;
+  justify-content: center;
+}
+
+.page-gaps .mobile-menu .btn--ghost:hover {
+  border-color: var(--color-gold);
+}
+
+/* Back to the main site: present but deliberately subordinate */
+.page-gaps .mobile-menu__back {
+  margin-top: var(--space-4);
+  font-size: 0.8125rem;
+  color: #A2A6AD;
+  transition: color 0.25s ease;
+}
+
+.page-gaps .mobile-menu__back:hover {
+  color: #FFFFFF;
+}
+
+/* Native anchor jumps (no Lenis / reduced motion) must clear the sticky
+   ribbon + header stack */
+.page-gaps section[id] {
+  scroll-margin-top: 126px;
+}
+
+/* Close (×): gold bars over the black overlay — the shared rule forces
+   ink bars for the white overlay, which would vanish here. Source order
+   after that rule makes this win at equal specificity. */
+.page-gaps .site-header .nav-toggle[aria-expanded="true"] .nav-toggle__bar {
+  background-color: var(--color-gold);
+}
+
+/* --- Video testimonial cards on the dark GAPS page: the meta strip
+   gains a gold hairline that brightens (with the name going gold) on
+   hover. Thumb frames re-theme automatically via the dark tokens. --- */
+.page-gaps .vt-card__meta {
+  border: 1px solid rgba(184, 134, 11, 0.25);
+  transition: border-color 0.3s ease;
+}
+
+.page-gaps .vt-card__name {
+  transition: color 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .page-gaps .vt-card:hover .vt-card__meta {
+    border-color: rgba(184, 134, 11, 0.6);
+  }
+
+  .page-gaps .vt-card:hover .vt-card__name {
+    color: var(--color-gold);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   11. Footer
+   Visually INDEPENDENT of section themes: every colour here is a fixed
+   literal, never a theme token, so neither the white system nor
+   .section--dark can restyle it. True black ground with a 1px top
+   separator so it reads as its own band even under a pitch-black section.
+   Nothing in the footer is a .reveal target — it is always visible.
+   -------------------------------------------------------------------------- */
+.site-footer {
+  background-color: #0A0A0B;
+  color: #A2A6AD;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-block: var(--space-5) var(--space-3);
+}
+
+.site-footer__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.site-footer .wordmark {
+  color: #FFFFFF;
+}
+
+.site-footer__tagline {
+  margin-top: var(--space-1);
+  font-size: 0.9375rem;
+  color: #A2A6AD;
+}
+
+.site-footer__social {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  list-style: none;
+}
+
+.site-footer__social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-pill);
+  color: #A2A6AD;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Icon + border brighten to gold on hover */
+.site-footer__social a:hover {
+  border-color: rgba(184, 134, 11, 0.7);
+  color: var(--color-gold);
+}
+
+.site-footer__social svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.site-footer__bottom {
+  padding-top: var(--space-3);
+  font-size: 0.875rem;
+  color: #A2A6AD;
+}
+
+/* --------------------------------------------------------------------------
+   12. Motion-ready states
+   Initial (hidden) states for JS-animated elements apply ONLY when main.js
+   has stamped .js-ready on <html>. If GSAP or the module fails to load,
+   main.js removes the class (or it never appears), so the page renders
+   fully visible and static. Never hide content without this guard.
+   Values here must match the fromTo values in main.js.
+   -------------------------------------------------------------------------- */
+html.js-ready:not(.no-motion) .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+html.js-ready:not(.no-motion) .hero-line__inner {
+  transform: translateY(110%);
+}
+
+html.js-ready:not(.no-motion) [data-hero-fade] {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+html.js-ready:not(.no-motion) .hero__portrait-mask {
+  clip-path: inset(0% 0% 100% 0%);
+}
+
+/* FAILSAFES — content can never stay permanently hidden.
+   main.js adds .hero-failsafe to the hero 2s after init, and
+   .reveal-force to reveal groups ~1.6s after their trigger fires.
+   !important beats both the hidden-state rules above and any inline
+   transform a dead/errored tween may have left behind. */
+.hero.hero-failsafe .hero-line__inner,
+.hero.hero-failsafe [data-hero-fade] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.hero.hero-failsafe .hero__portrait-mask {
+  clip-path: none !important;
+}
+
+.reveal.reveal-force {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Honour reduced motion at the CSS level too (belt and braces — main.js
+   also removes .js-ready whenever it won't be animating) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html.js-ready .reveal,
+  html.js-ready [data-hero-fade] {
+    opacity: 1;
+    transform: none;
+  }
+  html.js-ready .hero-line__inner {
+    transform: none;
+  }
+  html.js-ready .hero__portrait-mask {
+    clip-path: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   13. Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .hero {
+    min-height: auto;
+    padding-top: var(--space-4);
+  }
+
+  .hero__inner {
+    grid-template-columns: 1fr;
+  }
+
+  /* Portrait below the text on mobile (natural DOM order). Full width of
+     the container up to the frame's ratio-derived cap (496px), so phones
+     get an edge-to-edge portrait that can never overflow sideways — the
+     4/5 aspect-ratio + object-fit:cover stay locked at every width. */
+  .hero__media {
+    max-width: calc(620px * 4 / 5);
+  }
+
+  .hero__frame {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 860px) {
+  /* Collapse desktop nav into hamburger + overlay */
+  .site-nav {
+    display: none;
+  }
+  .nav-toggle {
+    display: flex;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --header-height: 64px;
+    --grid-cell: 40px;
+  }
+
+  .wordmark {
+    font-size: 1.1875rem;
+  }
+
+  .hero__ctas {
+    gap: var(--space-2) var(--space-3);
+  }
+
+  .hero__stat {
+    padding-inline: var(--space-2);
+  }
+
+  .hero__stat-number {
+    font-size: 1.375rem;
+  }
+
+  .site-footer__top {
+    flex-direction: column;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   14. Mobile-only refinements (index + gaps)
+   Everything below is scoped to phone widths — desktop layouts are
+   untouched by design.
+   -------------------------------------------------------------------------- */
+
+/* Overlay close ×. Fixed (not absolute) so it stays pinned while the
+   GAPS overlay scrolls its long link list; sits just below the sticky
+   header strip, which stacks ABOVE the overlay — inside that strip the
+   button would be buried under the frosted glass. While the menu is
+   open, main.js swaps the header's hamburger-X out (.nav-toggle--replaced)
+   so this is the single close affordance. Only index + gaps carry the
+   button; events/team keep the hamburger-X. */
+.mobile-menu__close {
+  position: fixed;
+  /* Both pages carrying this button (index + gaps) also carry the promo
+     ribbon, so the sticky stack above the overlay is ribbon + header.
+     If the ribbon is dismissed the button just sits a touch lower. */
+  top: calc(var(--promo-h) + var(--header-height) + 12px);
+  right: var(--side-pad);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;                       /* ≥44px tap target */
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+  box-shadow: var(--shadow-card);
+}
+
+.mobile-menu__close svg {
+  width: 22px;
+  height: 22px;
+}
+
+.nav-toggle--replaced {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* GAPS overlay is dark and sits under banner + header — gold stroke,
+   pushed below the taller sticky stack */
+.page-gaps .mobile-menu__close {
+  border-color: rgba(184, 134, 11, 0.55);
+  background-color: rgba(184, 134, 11, 0.1);
+  color: var(--color-gold);
+  box-shadow: none;
+}
+
+@media (max-width: 768px) {
+
+  /* --- Heroes: portrait tucked BETWEEN headline and subline. The text
+     wrapper dissolves (display: contents) so its children and the media
+     column become siblings of one flex column, then `order` interleaves
+     them — no duplicated markup. Portraits are height-capped and
+     centred so headline + portrait + subline sit within a scroll. --- */
+
+  /* Home hero: eyebrow → headline → portrait → subline → CTAs → stats.
+     The flex gap becomes the ONE spacing rhythm: the desktop column gap
+     (40px+) would otherwise apply between every reordered item and
+     stack on top of each element's own margin-bottom, so those margins
+     are zeroed below and the gap alone spaces the column. */
+  .hero__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .hero__eyebrow,
+  .hero__headline,
+  .hero__subline,
+  .hero__ctas {
+    margin-bottom: 0;
+  }
+
+  .hero__content {
+    display: contents;   /* children become flex items of .hero__inner */
+  }
+
+  .hero__eyebrow { order: 1; }
+  .hero__headline { order: 2; }
+  .hero__media { order: 3; }
+  .hero__subline { order: 4; }
+  .hero__ctas { order: 5; }
+  .hero__stats { order: 6; }
+
+  .hero__media {
+    width: 100%;
+    margin-block: 0;
+  }
+
+  /* The headshot is a SQUARE image bottom-aligned in the desktop 4/5
+     frame with object-fit: contain — at phone sizes that leaves ~70px
+     of invisible frame above the visible portrait. A square frame
+     hugs the image exactly, so the gap the eye sees is the flex gap. */
+  .hero__frame {
+    aspect-ratio: 1 / 1;
+    max-height: 300px;
+    max-width: 300px;
+    margin-inline: auto;
+  }
+
+  /* GAPS hero: eyebrow → headline → portrait → subline → meta → CTA.
+     Same spacing model as the home hero: flex gap owns the rhythm,
+     per-element margins zeroed. */
+  .page-hero__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .page-hero__grid .label,
+  .page-hero__grid h1,
+  .page-hero__grid .page-hero__subline,
+  .page-hero__grid .page-hero__meta {
+    margin-bottom: 0;
+  }
+
+  .page-hero__grid > div:first-child {
+    display: contents;   /* text column dissolves like .hero__content */
+  }
+
+  .page-hero__grid .label { order: 1; }
+  .page-hero__grid h1 { order: 2; }
+  .gaps-hero__media { order: 3; }
+  .page-hero__grid .page-hero__subline { order: 4; }
+  .page-hero__grid .page-hero__meta { order: 5; }
+  .page-hero__grid > div:first-child > div:last-child { order: 6; }
+
+  .gaps-hero__media {
+    width: 100%;
+    margin-block: 0;
+  }
+
+  /* Square frame for the square headshot — same phantom-space fix as
+     .hero__frame above */
+  .gaps-hero__portrait {
+    aspect-ratio: 1 / 1;
+    max-height: 280px;
+    max-width: 280px;
+    margin-inline: auto;
+  }
+
+  /* --- Six-gaps grid (gaps.html "Why This Exists"): 2 × 3 instead of a
+     six-deep stack. Tightened padding/type so two fit at 375px. --- */
+  .pillar-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+  }
+
+  .pillar-card {
+    padding: var(--space-2);
+  }
+
+  .pillar-card .icon-chip {
+    width: 38px;
+    height: 38px;
+    margin-bottom: var(--space-2);
+  }
+
+  .pillar-card .icon-chip svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .pillar-card__title {
+    font-size: 1.0625rem;
+  }
+
+  .pillar-card__desc {
+    font-size: 0.8125rem;
+  }
+
+  /* --- Germany stat cards: true 2 × 2 (overrides the old ≤480px
+     single-column fallback) --- */
+  .stat-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+  }
+
+  .stat-card {
+    padding: var(--space-2);
+  }
+
+  .stat-card strong {
+    font-size: 1.125rem;
+  }
+
+  .stat-card p {
+    font-size: 0.8125rem;
+  }
+
+  /* --- Past positions (index): ruled list becomes a 2-column grid of
+     hairline mini-cards, logo tiles shrunk --- */
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+    border-top: 0;
+    max-width: none;
+  }
+
+  .timeline__item {
+    grid-template-columns: 1fr;
+    align-items: start;
+    align-content: start;
+    gap: 4px;
+    padding: var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+  }
+
+  .timeline__logo {
+    width: 92px;
+    height: 38px;
+    margin-bottom: 4px;
+  }
+
+  .timeline__years {
+    font-size: 0.6875rem;
+  }
+
+  .timeline__role {
+    font-size: 0.9375rem;
+    line-height: 1.3;
+  }
+
+  .timeline__org {
+    font-size: 0.8125rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   15. Mobile CTA treatment (all pages) + mobile-only apply bands
+   .m-cta bands exist only on phones — desktop already carries its own
+   CTA rhythm (hero, section-cta blocks, pricing, final apply band).
+   .section-cta--desktop marks the two desktop blocks (panel + value on
+   gaps.html) that the adjacent .m-cta band REPLACES on mobile, so
+   phones never see two Apply buttons back-to-back.
+   -------------------------------------------------------------------------- */
+.m-cta {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Every CTA centres on mobile: block-level so auto margins centre it
+     in normal flow, and auto inline margins double as cross-axis
+     centring inside flex-column containers (mobile menu, cards). Base
+     .btn already centres its own label (inline-flex + justify-content). */
+  .btn {
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  /* Hero CTA row: the button's auto margins take its row; the arrow
+     link wraps beneath — centre it too */
+  .hero__ctas {
+    justify-content: center;
+  }
+
+  .section-cta {
+    text-align: center;
+  }
+
+  .section-cta--desktop {
+    display: none;   /* replaced by the adjacent .m-cta band */
+  }
+
+  /* Slim centred band: one line of copy over a gold Apply button */
+  .m-cta {
+    display: block;
+    text-align: center;
+    margin-top: var(--space-4);
+  }
+
+  .m-cta__line {
+    font-family: var(--font-heading);
+    font-size: 1.125rem;
+    font-style: italic;
+    color: var(--color-muted);
+    margin-bottom: var(--space-2);
+  }
+}
