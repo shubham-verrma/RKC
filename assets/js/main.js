@@ -680,7 +680,7 @@ function initEventsPage() {
           GAPS Members First</span>`;
       const cta = open
         ? `<a href="${esc(ev.registerUrl || "#")}" target="_blank" rel="noopener" class="btn btn--primary event-card__cta">Register</a>`
-        : `<a href="gaps.html" class="btn btn--ghost event-card__cta event-card__cta--gold">Explore GAPS</a>`;
+        : `<a href="https://gapsindia.com/" class="btn btn--ghost event-card__cta event-card__cta--gold">Explore GAPS</a>`;
       const note = open ? "" : `<p class="event-card__note">Announced first to GAPS members.</p>`;
       return `
     <article class="card event-card event-card--tba${open ? "" : " event-card--mfirst"} reveal">
@@ -719,7 +719,7 @@ function initEventsPage() {
         <p class="event-card__desc event-card__masked" aria-hidden="true">${esc(ev.description)}</p>
         <p class="event-card__lock-title">Exclusive to GAPS members.</p>
         <p class="event-card__lock-sub">Join GAPS to be part of these sessions.</p>
-        <a href="gaps.html" class="btn btn--ghost event-card__cta">Explore GAPS</a>`;
+        <a href="https://gapsindia.com/" class="btn btn--ghost event-card__cta">Explore GAPS</a>`;
     } else {
       const cta = isPast
         ? ev.recordingUrl

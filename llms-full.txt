@@ -1,10 +1,10 @@
 # Rajiv K Chawla — Complete Site Content
 
-> Full text content of all four pages, as clean markdown for AI agents. Internal links use the SITE_URL placeholder (replaced at deploy). All content below is drawn directly from the site's pages.
+> Full text content of all four pages, as clean markdown for AI agents. All content below is drawn directly from the site's pages.
 
 ---
 
-# Home (SITE_URL/)
+# Home (https://rajivkchawla.com/)
 
 ## Rajiv K Chawla — Business Coach · MSME & Startup Growth
 
@@ -28,7 +28,7 @@ Three pillars:
 2. Structured Training — Thirty touchpoints across the year.
 3. Astro-Numerology — A considered input, for you and family.
 
-Details: SITE_URL/gaps.html
+Details: https://gapsindia.com/
 
 ## On the ground
 
@@ -49,7 +49,7 @@ In their own words, owners and founders on what changed for their business:
 
 ---
 
-# GAPS — Growth Accelerator Program for SMEs (SITE_URL/gaps.html)
+# GAPS — Growth Accelerator Program for SMEs (https://gapsindia.com/)
 
 A full year of structured support for India's MSME owners, built and led by Rajiv K Chawla. Founder & Lead Mentor: Rajiv K Chawla. Enrolment by application only.
 
@@ -178,7 +178,7 @@ The same eight owner testimonials listed on the home page (Adarsh Shankar, Amit 
 
 ## Documents
 
-- [GAPS 2026 Information Booklet (PDF)](SITE_URL/GAPS_Brochure.pdf)
+- [GAPS 2026 Information Booklet (PDF)](https://gapsindia.com/GAPS_Brochure.pdf)
 
 ## Apply to the next cohort
 
@@ -197,7 +197,7 @@ Enrolment: https://rajivkchawla.exlyapp.com/checkout/f3f404f7-c6c2-45f9-b772-f2d
 
 ---
 
-# Upcoming Events (SITE_URL/events.html)
+# Upcoming Events (https://rajivkchawla.com/events.html)
 
 Live sessions: upcoming events and webinars. New live sessions every week — masterclasses, workshops and Q&As for founders and business owners.
 
@@ -205,7 +205,7 @@ The page lists upcoming events (open for registration) and past sessions. Some e
 
 ---
 
-# Expert Panel (SITE_URL/team.html)
+# Expert Panel (https://rajivkchawla.com/team.html)
 
 The people behind the work — the team that keeps programs, events and member support running. The same nine-person panel detailed under the GAPS programme above: CS Dr. Ajay Garg (Corporate Governance Counsel), CA Sangeet K Gupta (Direct Tax & Financial Health Counsel), Nirmal Bansal (Wealth Management Counsel), Parminder Singh (Chief Subsidy Officer), CA Rajesh K Khandelwal (GST & Indirect Tax Counsel), Shubham Verma (Digital Expansion & Growth Counsel), Adv. Rahul Gautam (Legal Counsel, Supreme Court of India), Lekhraj Sharma (Chief Nodal Officer), and Sudiep Kumar (Placement & Recruitment).
 

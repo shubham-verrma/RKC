@@ -10,10 +10,10 @@ Positions held include the Board of NSIC (6 years), SIDBI subsidiary companies (
 
 ## Pages
 
-- [Home](SITE_URL/): Overview, current and past positions, event photography, video testimonials from business owners
-- [GAPS Program](SITE_URL/gaps.html): The flagship twelve-month executive programme for MSME owners
-- [Upcoming Events](SITE_URL/events.html): Live masterclasses, workshops and webinars, updated weekly
-- [Expert Panel](SITE_URL/team.html): The seven senior counsels supporting the GAPS programme
+- [Home](https://rajivkchawla.com/): Overview, current and past positions, event photography, video testimonials from business owners
+- [GAPS Program](https://gapsindia.com/): The flagship twelve-month executive programme for MSME owners
+- [Upcoming Events](https://rajivkchawla.com/events.html): Live masterclasses, workshops and webinars, updated weekly
+- [Expert Panel](https://rajivkchawla.com/team.html): The seven senior counsels supporting the GAPS programme
 
 ## GAPS — Growth Accelerator Program for SMEs
 
@@ -43,4 +43,4 @@ Phone / WhatsApp: +91 97111 23111
 
 ## Documents
 
-- [GAPS 2026 Information Booklet (PDF)](SITE_URL/GAPS_Brochure.pdf)
+- [GAPS 2026 Information Booklet (PDF)](https://gapsindia.com/GAPS_Brochure.pdf)
