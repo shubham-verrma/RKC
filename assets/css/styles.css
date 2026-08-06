@@ -5177,6 +5177,12 @@ html.js-ready:not(.no-motion) .hero__portrait-mask {
   .timeline__org {
     font-size: 0.8125rem;
   }
+
+  /* Odd item count: the last mini-card spans both tracks so the grid
+     never strands a lone half-width card */
+  .timeline__item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
 }
 
 /* --------------------------------------------------------------------------
