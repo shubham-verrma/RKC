@@ -1235,17 +1235,25 @@ body.has-promo .hero {
   flex-shrink: 0;
 }
 
-/* Fixed-size flex slot per logo: every logo lives in the same 150×40 box,
-   centred both ways — one shared baseline, equal rhythm, and nothing can
-   ever overflow its slot or the page. */
+/* Fixed-size flex slot per logo: every logo draws in the same 150×40
+   content box, centred both ways — one shared baseline, equal rhythm,
+   and nothing can ever overflow its slot or the page. The slot's outer
+   size is 170×52: the extra 20/12 is absorbed by the padding, so the
+   hover wash reads as a soft pad AROUND the logo while the logo itself
+   renders at the full pre-wash 150×40. Padding lives here at REST (not
+   on :hover) so geometry never shifts; at rest the background is
+   transparent, so the pad is invisible. */
 .press__slot {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 150px;
-  max-width: 150px;
-  height: 40px;
+  width: 170px;
+  max-width: 170px;
+  height: 52px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
 }
 
 /* contain + max-* means any native aspect ratio scales DOWN to fit.
@@ -1283,8 +1291,14 @@ body.has-promo .hero {
   max-height: 40%;
 }
 
-/* Colour resolves on hover — pointer devices only */
+/* Colour resolves on hover — pointer devices only. A faint ink wash
+   behind the slot lifts legibility (no border/shadow/lift — it should
+   feel like a highlight, not a card). */
 @media (hover: hover) and (pointer: fine) {
+  .press__slot:hover {
+    background-color: rgba(14, 17, 22, 0.04);
+  }
+
   .press__slot:hover img {
     filter: grayscale(0);
     opacity: 1;
@@ -1319,11 +1333,13 @@ body.has-promo .hero {
 }
 
 @media (max-width: 480px) {
-  /* Smaller slots on phones — the percentage tiers scale with them */
+  /* Smaller slots on phones — the percentage tiers scale with them.
+     Outer size again carries the 20/12 padding on top of the 116×32
+     logo content box. */
   .press__slot {
-    width: 116px;
-    max-width: 116px;
-    height: 32px;
+    width: 136px;
+    max-width: 136px;
+    height: 44px;
   }
 }
 
